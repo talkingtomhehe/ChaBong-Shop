@@ -1,20 +1,21 @@
 <?php
-// filepath: c:\xampp\htdocs\chabongshop\views\layouts\header.php
+// filepath: c:\xampp\htdocs\petshop\views\layouts\header.php
 // Common header for all pages
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title><?php echo isset($pageTitle) ? $pageTitle . ' - ' : ''; ?><?php echo SITE_NAME; ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>public/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <header>
+        <!-- Utility bar (account, login, etc) -->
         <div class="utility-bar">
             <div class="container-fluid d-flex justify-content-end">
                 <?php if(isset($_SESSION['user_id'])): ?>
@@ -56,17 +57,56 @@
                 <?php endif; ?>
             </div>
         </div>
+        
+        <!-- Main navigation -->
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container-fluid">
+                <!-- Logo -->
                 <a class="navbar-brand" href="<?php echo SITE_URL; ?>">
                     <img src="<?php echo SITE_URL; ?>public/images/logo.png" alt="<?php echo SITE_NAME; ?> Logo">
                 </a>
+                
+                <!-- Mobile cart button - visible on small screens only -->
+                <?php if(isset($_SESSION['user_id'])): ?>
+                <div class="mobile-cart d-lg-none">
+                    <a class="nav-link position-relative" href="<?php echo SITE_URL; ?>cart">
+                        <i class="bi bi-cart3 fs-5"></i>
+                        <?php 
+                        // Get cart count
+                        require_once 'models/Cart.php';
+                        $cartModel = new Cart();
+                        $cartCount = $cartModel->countItems($_SESSION['user_id']);
+                        if ($cartCount > 0) {
+                            echo '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">' . $cartCount . '</span>';
+                        }
+                        ?>
+                    </a>
+                </div>
+                <?php endif; ?>
+                
+                <!-- Mobile search form - for very small screens -->
+                <form class="mobile-search d-lg-none" role="search" action="<?php echo SITE_URL; ?>products/search" method="get">
+                    <div class="input-group">
+                        <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Toggle button for mobile menu -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <!-- Offcanvas menu for mobile -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title brand-text" id="offcanvasNavbarLabel"><?php echo SITE_NAME; ?></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
+                        <!-- Navigation links -->
                         <ul class="navbar-nav justify-content-center flex-grow-1 align-items-center nav-underline">
                             <li class="nav-item">
                                 <a class="nav-link <?php echo $controller === 'home' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>">Home</a>
@@ -91,35 +131,46 @@
                                 </a>
                             </li>
                         </ul>
+                        
+                        <!-- Mobile-only search form inside offcanvas -->
+                        <form class="d-flex d-lg-none mt-3 mb-3" role="search" action="<?php echo SITE_URL; ?>products/search" method="get">
+                            <div class="input-group">
+                                <input class="form-control" type="search" name="search" placeholder="Search" aria-label="Search" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
+                
+                <!-- Desktop cart button - hidden on small screens -->
                 <?php if(isset($_SESSION['user_id'])): ?>
-                <div class="nav-item">
+                <div class="nav-item d-none d-lg-block">
                     <a class="nav-link position-relative" href="<?php echo SITE_URL; ?>cart">
                         <i class="bi bi-cart3 fs-5"></i>
                         <?php 
-                        // Get cart count if user is logged in
-                        if (isset($_SESSION['user_id'])) {
+                        // Get cart count
+                        if (!isset($cartModel)) {
                             require_once 'models/Cart.php';
                             $cartModel = new Cart();
-                            $cartCount = $cartModel->countItems($_SESSION['user_id']);
-                            if ($cartCount > 0) {
-                                echo '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">' . $cartCount . '</span>';
-                            }
+                        }
+                        $cartCount = $cartModel->countItems($_SESSION['user_id']);
+                        if ($cartCount > 0) {
+                            echo '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">' . $cartCount . '</span>';
                         }
                         ?>
                     </a>
                 </div>
                 <?php endif; ?>
-                <form class="d-flex position-relative" role="search" action="<?php echo SITE_URL; ?>products/search" method="get">
+                
+                <!-- Desktop search form - hidden on small screens -->
+                <form class="d-none d-lg-flex position-relative" role="search" action="<?php echo SITE_URL; ?>products/search" method="get">
                     <input class="form-control search-input" type="search" name="search" placeholder="Search" aria-label="Search" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
                     <button type="submit" class="btn" style="position: absolute; right: 0; border: none; top: 0; height: 100%; background: none;">
                         <i class="bi bi-search search-icon"></i>
                     </button>
                 </form>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
             </div>
         </nav>
     </header>
