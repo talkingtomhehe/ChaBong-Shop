@@ -1,0 +1,127 @@
+<?php
+// filepath: c:\xampp\htdocs\chabongshop\views\layouts\header.php
+// Common header for all pages
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo isset($pageTitle) ? $pageTitle . ' - ' : ''; ?><?php echo SITE_NAME; ?></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>public/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="utility-bar">
+            <div class="container-fluid d-flex justify-content-end">
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <div class="dropdown">
+                        <?php 
+                        // Get user avatar
+                        require_once __DIR__ . '/../../models/User.php';
+                        $db = new Database();
+                        $userAvatarModel = new User($db->getConnection());
+                        $avatarPath = $userAvatarModel->getUserAvatar($_SESSION['user_id']);
+
+                        // Check if it's an external URL or local path
+                        if (strpos($avatarPath, 'http') === 0) {
+                            $avatarUrl = $avatarPath; // External URL, use as-is
+                        } else {
+                            $avatarUrl = SITE_URL . str_replace('\\', '/', $avatarPath); // Local path
+                        }
+                        ?>
+                        <button class="utility-btn dropdown-toggle d-flex align-items-center" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="<?php echo $avatarUrl; ?>" alt="Profile" class="rounded-circle me-2" style="width: 24px; height: 24px; object-fit: cover;">
+                            <?php echo htmlspecialchars($_SESSION['username']); ?>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>user/profile">
+                                <i class="bi bi-person me-2"></i> My Profile
+                            </a></li>
+                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>user/orders">
+                                <i class="bi bi-box-seam me-2"></i> My Orders
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="<?php echo SITE_URL; ?>user/logout">
+                                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                            </a></li>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <a href="<?php echo SITE_URL; ?>user/login" class="utility-btn me-2">Sign In</a>
+                    <a href="<?php echo SITE_URL; ?>user/signup" class="utility-btn">Sign Up</a>
+                <?php endif; ?>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="<?php echo SITE_URL; ?>">
+                    <img src="<?php echo SITE_URL; ?>public/images/logo.png" alt="<?php echo SITE_NAME; ?> Logo">
+                </a>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title brand-text" id="offcanvasNavbarLabel"><?php echo SITE_NAME; ?></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-center flex-grow-1 align-items-center nav-underline">
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo $controller === 'home' ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle <?php echo $controller === 'products' ? 'active' : ''; ?>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Products
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <?php if (isset($categories) && $categories->num_rows > 0): ?>
+                                        <?php while($category = $categories->fetch_assoc()): ?>
+                                            <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>products/category/<?php echo urlencode($category['name']); ?>"><?php echo htmlspecialchars($category['name']); ?></a></li>
+                                        <?php endwhile; ?>
+                                        <li><hr class="dropdown-divider"></li>
+                                    <?php endif; ?>
+                                    <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>products">All Products</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo ($pageTitle == 'Contact Us') ? 'active' : ''; ?>" href="<?php echo SITE_URL; ?>contact">
+                                    Contact Us
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <?php if(isset($_SESSION['user_id'])): ?>
+                <div class="nav-item">
+                    <a class="nav-link position-relative" href="<?php echo SITE_URL; ?>cart">
+                        <i class="bi bi-cart3 fs-5"></i>
+                        <?php 
+                        // Get cart count if user is logged in
+                        if (isset($_SESSION['user_id'])) {
+                            require_once 'models/Cart.php';
+                            $cartModel = new Cart();
+                            $cartCount = $cartModel->countItems($_SESSION['user_id']);
+                            if ($cartCount > 0) {
+                                echo '<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">' . $cartCount . '</span>';
+                            }
+                        }
+                        ?>
+                    </a>
+                </div>
+                <?php endif; ?>
+                <form class="d-flex position-relative" role="search" action="<?php echo SITE_URL; ?>products/search" method="get">
+                    <input class="form-control search-input" type="search" name="search" placeholder="Search" aria-label="Search" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+                    <button type="submit" class="btn" style="position: absolute; right: 0; border: none; top: 0; height: 100%; background: none;">
+                        <i class="bi bi-search search-icon"></i>
+                    </button>
+                </form>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>

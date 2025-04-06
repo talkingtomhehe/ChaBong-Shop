@@ -1,0 +1,907 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+/* General Styles */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Styles */
+header {
+    background-color: #FFFFFF;
+    color: #6d5741;
+    padding: 2px;
+    text-align: center;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    background-color: #FFFFFF;
+    padding-top: 70px; /* Combined height of navbar and utility bar */
+    margin-top: 0;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #f5f0e9; /* Changed from grey #E4E6E8 to light beige */
+    color: #9d6340;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: auto;
+}
+
+.navbar-nav {
+    margin-left: 50px; 
+    display: flex;
+    align-items: center;
+}
+
+.navbar.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 4px rgba(183, 124, 82, 0.15); /* Changed shadow color to gold/brown */
+    transition: all 0.3s ease;
+    /* Add padding to account for the utility bar */
+    margin-top: 28px;
+}
+
+.nav-item {
+    padding: 0 10px; 
+}
+
+/* Text color updates for consistent gold/brown theme */
+
+/* Navbar text colors */
+.nav-link {
+    color: #6d5741 !important; /* Dark brown for main nav links */
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover, 
+.nav-link:focus {
+    color: #b77c52 !important; /* Gold/brown on hover */
+}
+
+.nav-link.active {
+    color: #b77c52 !important; /* Gold/brown for active page */
+    font-weight: 600;
+}
+
+.dropdown-item {
+    color: #6d5741; /* Dark brown for dropdown items */
+}
+
+.dropdown-item:hover, 
+.dropdown-item:focus {
+    background-color: #f5f0e9; /* Light beige background on hover */
+    color: #b77c52; /* Gold/brown text on hover */
+}
+
+.dropdown-item.active {
+    background-color: #b77c52; /* Gold/brown background for active item */
+    color: white;
+}
+
+/* Product card text */
+.card-title {
+    color: #6d5741; /* Dark brown for product names */
+    font-weight: 500;
+}
+
+.card-text {
+    color: #b77c52; /* Gold/brown for prices */
+    font-weight: 600;
+}
+
+/* Product details page */
+.product-title {
+    color: #6d5741; /* Dark brown for product title */
+    font-weight: 600;
+}
+
+.product-category {
+    color: white;
+    background-color: #b77c52 !important; /* Gold/brown for category badge */
+    border-color: #b77c52 !important;
+}
+
+.product-price {
+    color: #b77c52 !important; /* Gold/brown for price */
+    font-weight: 600;
+}
+
+.product-description {
+    color: #6d5741; /* Dark brown for description */
+}
+
+/* Section headings */
+h1, h2, h3, h4, h5 {
+    color: #6d5741; /* Dark brown for headings */
+}
+
+h3.section-title {
+    color: #6d5741;
+    border-bottom: 2px solid #e9e2d9;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Category titles */
+.card-header h5 {
+    color: #6d5741;
+    font-weight: 500;
+}
+
+/* Additional text color updates for consistency */
+
+/* Product card title - update from dark brown to proper color */
+.card-title {
+    color: #b77c52; /* Changed from #6d5741 to gold/brown */
+    font-weight: 500;
+}
+
+/* Product details headings */
+.product-details h5, 
+.product-details .h5 {
+    color: #b77c52; /* Gold/brown for "Description" heading */
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Section headings on product details page */
+.product-details h3, 
+.mt-5 h3 {
+    color: #b77c52; /* Gold/brown for "You May Also Like" heading */
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Product name in details page */
+.product-details h1 {
+    color: #b77c52; /* Gold/brown for product name */
+    font-weight: 600;
+}
+
+/* Description text on product details */
+.product-details p {
+    color: #6d5741; /* Keep dark brown for readability */
+    line-height: 1.6;
+}
+
+/* Clean up breadcrumb styling to match theme */
+.breadcrumb-item a {
+    color: #9a8268; /* Muted gold for breadcrumb links */
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #b77c52; /* Gold/brown on hover */
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: #b77c52; /* Gold/brown for current page breadcrumb */
+}
+
+/* Form labels on product details */
+.form-label {
+    color: #6d5741; /* Dark brown for labels */
+}
+
+/* Additional section headers across site */
+section h2, 
+section .h2 {
+    color: #b77c52; /* Gold/brown for section headings like "Featured Products" */
+    font-weight: 600;
+}
+
+/* Price in related products should match */
+.product-card .card-text {
+    color: #b77c52; /* Gold/brown for price */
+    font-weight: 600;
+}
+
+/* Override Bootstrap text colors */
+.text-primary {
+    color: #b77c52 !important; /* Replace Bootstrap blue with gold/brown */
+}
+
+.text-secondary {
+    color: #9a8268 !important; /* Replace Bootstrap grey with muted gold */
+}
+
+/* Special emphasis text */
+.special-text {
+    color: #b77c52;
+    font-weight: 500;
+}
+
+/* Search results highlight */
+.highlight {
+    background-color: rgba(183, 124, 82, 0.15);
+    padding: 0 2px;
+}
+
+/* Override Bootstrap badge colors */
+.badge.bg-secondary {
+    background-color: #9a8268 !important;
+}
+
+.badge.bg-primary {
+    background-color: #b77c52 !important;
+}
+
+.utility-bar {
+    background-color: #f5f0e9; /* Changed from grey #E9EBEC to light beige */
+    padding: 4px 0;
+    font-size: 12px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1031;
+}
+
+.utility-btn {
+    background: transparent;
+    border: none;
+    color: #d4a476;
+    font-size: 12px;
+    padding: 2px 8px;
+    transition: color 0.2s ease;
+    position: relative;
+    text-decoration: none;
+}
+
+.utility-btn:first-child::after {
+    content: '|';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #d4a476;
+    font-size: 12px;
+    opacity: 0.5;    
+    pointer-events: none;
+    padding: 0 2px;
+    padding-bottom: 2px;
+}
+
+.utility-btn:hover {
+    color: #9d6340;
+}
+
+.brand-text {
+    font-family: cursive, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.custom-btn {
+    border-radius: 25px;
+    padding: 8px 20px;
+    background-color: transparent;
+    border: 2px solid #f5f0e9; /* Changed from #E9EBEC to light beige */
+    color: #6d5741;
+    transition: all 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #f5f0e9; /* Changed from #E9EBEC to light beige */
+    border-color: #f5f0e9;
+    color: #b77c52;
+}
+
+.custom-btn:active {
+    background-color: #f5f0e9; /* Changed from #E9EBEC to light beige */
+    border-color: #f5f0e9;
+    color: #b77c52;
+}
+
+.search-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #b77c52;
+    transition: opacity 0.2s ease;
+}
+
+.search-input:focus + .search-icon,
+.search-input:not(:placeholder-shown) + .search-icon {
+    opacity: 0;
+}
+
+.search-input {
+    padding: 8px 48px 8px 16px;  
+    border-radius: 25px;
+    width: 180px;
+    border: 1px solid #e9e2d9; /* Changed from #e5e5e5 to light beige */
+    background-color: #f8f5f0;
+    transition: all 0.2s ease;
+}
+
+.search-input::placeholder {
+    color: #9a8268;
+    font-size: 16px;
+}
+
+.search-input:hover {
+    background-color: #f5f0e9;
+}
+
+.search-input:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: #e9e2d9;
+    box-shadow: none;
+}
+
+.custom-btn:focus {
+    box-shadow: 0 0 0 0.25rem rgba(183, 124, 82, 0.25); /* Changed from grey to gold/brown */
+}
+
+@media (max-width: 991px) {
+    .search-input {
+        display: none;
+    }
+    
+    .search-icon {
+        display: none;
+    }
+
+    .offcanvas {
+        width: 300px;
+    }
+
+    .offcanvas-body {
+        padding: 1rem;
+    }
+
+    .nav-item {
+        width: 100%;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #e9e2d9; /* Changed from #e5e5e5 to light beige */
+    }
+
+    .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 1.1rem;
+    }
+
+    .dropdown-menu {
+        border: none;
+        background: transparent;
+        padding-left: 1rem;
+    }
+}
+
+/* Product container */
+.product-container {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+}
+
+/* Product Card Styles */
+.product-card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card .card-img-top {
+    height: 200px; /* Fixed height for images */
+    object-fit: contain; /* Keep aspect ratio and fit within container */
+    padding: 1rem;
+}
+
+.product-card .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card .card-title {
+    font-size: 1rem;
+    height: 2.5rem; /* Fixed height for title */
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.product-card .card-text {
+    margin-bottom: 0.5rem;
+}
+
+.product-card .btn {
+    margin-top: auto; /* Push button to bottom */
+}
+
+/* Column sizing for products */
+.product-col {
+    width: 20%; /* Set to 20% for 5 cards per row */
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 1199px) {
+    .product-col {
+        width: 25%; /* 4 per row on medium screens */
+    }
+}
+
+@media (max-width: 991px) {
+    .product-col {
+        width: 33.33%; /* 3 per row on smaller screens */
+    }
+}
+
+@media (max-width: 767px) {
+    .product-col {
+        width: 50%; /* 2 per row on mobile */
+    }
+}
+
+@media (max-width: 575px) {
+    .product-col {
+        width: 100%; /* 1 per row on very small screens */
+    }
+}
+
+/* Clickable card styles */
+.clickable-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clickable-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(183, 124, 82, 0.2); /* Changed from black shadow to gold/brown */
+}
+
+/* Custom Add to Cart button styling */
+.btn-outline-dark.cart-btn {
+    color: #000000;
+    background-color: transparent;
+    border-color: #e9e2d9; /* Light grey border by default */
+}
+
+/* Hover effect - only change border color to black */
+.btn-outline-dark.cart-btn:hover {
+    color: #000000 !important;
+    background-color: transparent !important;
+    border-color: #000000 !important;
+}
+
+.btn-outline-dark.cart-btn:hover i {
+    color: #000000 !important;
+}
+
+/* Active state for the button when clicked */
+.btn-outline-dark.cart-btn:active,
+.btn-outline-dark.cart-btn:focus {
+    color: #000000 !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border-color: #000000 !important;
+    box-shadow: none !important;
+}
+
+/* Back to top button styling */
+#myBtn {
+    position: fixed;
+    bottom: 30px; /* Position it higher from the bottom */
+    right: 30px; /* Position on the right side */
+    z-index: 9999; /* Ensure it's above other elements */
+    border: none;
+    outline: none;
+    background-color: rgba(183, 124, 82, 0.7); /* Changed from black to gold/brown */
+    color: white;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Make it oval/circular */
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: none; /* Hidden by default */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#myBtn:hover {
+    background-color: rgba(183, 124, 82, 1); /* Changed from black to gold/brown */
+    transform: translateY(-3px);
+}
+
+/* Logo styling - bigger logo with preserved navbar height and shifted right */
+.navbar-brand {
+    padding: 0;
+    padding-left: 15px; /* Add left padding to move logo right */
+    margin-left: 15px; /* Additional space from the left edge */
+    display: flex;
+    align-items: center;
+    height: 60px; /* Fixed navbar height */
+    overflow: hidden;
+}
+
+.navbar-brand img {
+    max-height: 50px; /* Larger logo height */
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+/* Adjust container fluid to balance the navbar */
+.navbar .container-fluid {
+    padding-left: 5px; /* Reduce default padding to fine-tune position */
+}
+
+/* View All Products button styling - matching Add to Cart style */
+.view-all-btn {
+    background-color: white;
+    color: #000000;
+    border: 1px solid #e9e2d9; /* Light grey border by default - same as cart button */
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+.view-all-btn:active {
+    background-color: rgba(183, 124, 82, 0.1) !important; /* Changed from black to gold/brown */
+    border-color: #000000 !important; /* Keep border black when clicked */
+    color: #000000 !important;
+    box-shadow: none !important;
+}
+
+.view-all-btn:focus {
+    box-shadow: none !important; /* Remove focus shadow */
+    border-color: #000000 !important;
+    outline: none;
+}
+
+/* Override any Bootstrap styles that might affect the button */
+.view-all-btn.btn {
+    border: 1px solid #e9e2d9 !important; /* Changed from grey #abb1b7 to light beige */
+    font-weight: 400;
+}
+
+/* Update View All Products button */
+.view-all-btn:hover {
+    border-color: #b77c52 !important;
+    color: #b77c52 !important;
+}
+
+.view-all-btn.btn:hover {
+    border: 1px solid #b77c52 !important;
+}
+
+/* Updated color scheme using #b77c52 (elegant gold/brown) */
+
+/* Category sidebar styling */
+.list-group-item {
+    background-color: #fff; /* White background */
+    border-color: #e9e2d9; /* Light beige border */
+}
+
+.list-group-item.active {
+    background-color: #b77c52 !important; /* Gold/Brown when active */
+    border-color: #b77c52 !important;
+}
+
+.list-group-item a {
+    color: #6d5741; /* Darker brown text */
+}
+
+.list-group-item a:hover {
+    color: #b77c52; /* Gold/Brown text on hover */
+}
+
+.card-header {
+    background-color: #f5f0e9; /* Very light beige header */
+    color: #6d5741;
+    border-bottom: 1px solid #e9e2d9;
+}
+
+/* Sort buttons styling */
+.btn-outline-secondary {
+    color: #6d5741;
+    border-color: #e9e2d9;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f5f0e9;
+    color: #b77c52;
+    border-color: #b77c52;
+}
+
+.btn-primary {
+    background-color: #b77c52 !important; /* Gold/Brown primary button */
+    border-color: #b77c52 !important;
+}
+
+.btn-primary:hover {
+    background-color: #9a683f !important; /* Darker gold/brown on hover */
+    border-color: #9a683f !important;
+}
+
+/* Pagination styling */
+.pagination .page-link {
+    color: #6d5741;
+    background-color: #fff;
+    border-color: #e9e2d9;
+}
+
+.pagination .page-link:hover {
+    color: #b77c52;
+    background-color: #f5f0e9;
+    border-color: #e9e2d9;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #b77c52;
+    border-color: #b77c52;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #c3b6a5;
+}
+
+/* Text color for info elements */
+.text-muted {
+    color: #9a8268 !important;
+}
+
+/* Alert styling */
+.alert-info {
+    color: #6d5741;
+    background-color: #f5f0e9;
+    border-color: #e9e2d9;
+}
+
+/* Product page header */
+.container h1 {
+    color: #6d5741;
+}
+
+/* Additional elements to update for consistency */
+
+/* Update button hover states */
+.btn-dark:hover {
+    background-color: #9a683f !important;
+    border-color: #9a683f !important;
+}
+
+/* Update cart button border on hover */
+.btn-outline-dark.cart-btn:hover {
+    border-color: #b77c52 !important;
+    color: #b77c52 !important;
+}
+
+/* Banner styling */
+.banner-container {
+    position: relative;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.banner-image {
+    height: 400px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    /* Add a subtle gradient overlay for better text readability */
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0) 100%);
+}
+
+.banner-overlay .container {
+    color: white;
+    text-align: left;
+}
+
+.banner-content {
+    max-width: 500px;
+    padding-left: 5%; /* Use percentage for responsive positioning */
+}
+
+.banner-overlay h1 {
+    color: white;
+    font-size: 3rem; /* Slightly larger */
+    font-weight: 700; /* More bold */
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
+    letter-spacing: 1px; /* Add letter spacing */
+    line-height: 1.2; /* Better line height */
+    position: relative; /* For decoration */
+}
+
+/* Add a decorative line under the heading */
+.banner-overlay h1:after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #b77c52; /* Use your gold/brown color */
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.banner-overlay p {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    font-weight: 300; /* Lighter weight for subtitle */
+    line-height: 1.4;
+    opacity: 0.9; /* Slightly transparent for depth */
+}
+
+@media (max-width: 768px) {
+    .banner-image {
+        height: 300px;
+    }
+    
+    .banner-overlay h1 {
+        font-size: 2rem;
+    }
+    
+    .banner-overlay h1:after {
+        width: 60px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .banner-overlay p {
+        font-size: 1rem;
+    }
+    
+    .banner-content {
+        max-width: 80%;
+    }
+}
+
+/* Auth form styling */
+.auth-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.auth-title {
+    color: #b77c52;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.auth-input {
+    border-color: #e9e2d9;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+}
+
+.auth-input:focus {
+    border-color: #b77c52;
+    box-shadow: 0 0 0 0.15rem rgba(183, 124, 82, 0.25);
+}
+
+.input-group-text {
+    border-color: #e9e2d9;
+    color: #b77c52;
+}
+
+.auth-input:focus + .input-group-text,
+.input-group:focus-within .input-group-text {
+    border-color: #b77c52;
+}
+
+.forgot-link {
+    color: #9a8268;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.forgot-link:hover {
+    color: #b77c52;
+    text-decoration: underline;
+}
+
+.auth-btn {
+    padding: 12px;
+    font-weight: 500;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.social-btn {
+    border: 1px solid #e9e2d9;
+    background-color: #fff;
+    color: #6d5741;
+    padding: 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+/* Enhanced social button styling */
+.social-box {
+    border: 2px solid #e0d5c5;
+    background-color: #fff;
+    color: #6d5741;
+    font-weight: 500;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-box:hover {
+    border-color: #b77c52;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.social-box:active {
+    transform: translateY(0);
+}
+
+.social-box.selected {
+    background-color: #b77c52;
+    border-color: #b77c52;
+    color: white;
+    box-shadow: 0 2px 8px rgba(183, 124, 82, 0.4);
+}
+
+/* Facebook icon color fix when selected */
+.social-box.selected i.bi-facebook {
+    color: white !important;
+}
+
+.auth-link {
+    color: #b77c52;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.auth-link:hover {
+    color: #9a683f;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.login-message {
+    font-size: 1.5rem;
+    letter-spacing: 0.8px;
+}
+
+@media (max-width: 576px) {
+    .auth-card .card-body {
+        padding: 1.5rem;
+    }
+}
