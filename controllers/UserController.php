@@ -77,7 +77,7 @@ class UserController {
     
     public function signup() {
         global $action;
-        
+    
         // Handle form submission
         $error = '';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -91,17 +91,20 @@ class UserController {
             } elseif ($password !== $confirm) {
                 $error = 'Passwords do not match';
             } else {
-                $userId = $this->userModel->register($username, $email, $password);
+                $result = $this->userModel->register($username, $email, $password);
                 
-                if ($userId) {
-                    // Set session and redirect
-                    $_SESSION['user_id'] = $userId;
-                    $_SESSION['username'] = $username;
+                if ($result['success']) {
+                    // Properly set session using SessionManager
+                    require_once 'includes/SessionManager.php';
+                    SessionManager::setUser($result['user_id'], $username);
+                    
+                    // Update last login time
+                    $this->userModel->updateLastLogin($result['user_id']);
                     
                     header('Location: ' . SITE_URL);
                     exit;
                 } else {
-                    $error = 'Registration failed. Please try again.';
+                    $error = $result['message'] ?? 'Registration failed. Please try again.';
                 }
             }
         }

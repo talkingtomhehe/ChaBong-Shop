@@ -17,6 +17,8 @@ require_once __DIR__ . '/../../includes/SessionManager.php';
         const SITE_URL = '<?php echo SITE_URL; ?>';
     </script>
     <script src="<?php echo SITE_URL; ?>public/js/search.js"></script>
+    <script src="<?php echo SITE_URL; ?>public/js/login.js"></script>
+    <script src="<?php echo SITE_URL; ?>public/js/register.js"></script>
 </head>
 <body>
     <header>

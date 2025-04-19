@@ -855,16 +855,6 @@ section .h2 {
     box-shadow: 0 0 0 0.15rem rgba(183, 124, 82, 0.25);
 }
 
-.input-group-text {
-    border-color: #e9e2d9;
-    color: #b77c52;
-}
-
-.auth-input:focus + .input-group-text,
-.input-group:focus-within .input-group-text {
-    border-color: #b77c52;
-}
-
 .forgot-link {
     color: #777777; /* IMPROVED: Changed from #9a8268 to medium gray */
     font-size: 0.875rem;
@@ -1385,6 +1375,35 @@ body.offcanvas-active .mobile-cart {
 
 .search-all-btn:hover {
     text-decoration: underline;
+}
+
+/* Form Validation Styles */
+.invalid-feedback {
+    display: none;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.is-valid {
+    border-color: #198754 !important;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    margin-top: 5px;
+}
+
+.password-strength .progress {
+    margin-bottom: 5px;
+}
+
+.strength-text {
+    font-size: 0.8rem;
 }
 
 /* Mobile search dropdown positioning */

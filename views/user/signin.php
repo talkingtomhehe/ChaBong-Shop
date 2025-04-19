@@ -11,32 +11,28 @@
                             <div class="alert alert-danger"><?php echo $error; ?></div>
                         <?php endif; ?>
                         
-                        <form method="post" action="<?php echo SITE_URL; ?>user/login">
+                        <form id="loginForm" method="post" action="<?php echo SITE_URL; ?>user/login">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
+                                <label for="login_username" class="form-label">Username</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-transparent border-end-0">
-                                        <i class="bi bi-person text-muted"></i>
-                                    </span>
-                                    <input type="username" class="form-control auth-input border-start-0" 
-                                        id="username" name="username" 
+                                    <input type="text" class="form-control auth-input border-start-0" 
+                                        id="login_username" name="username" 
                                         placeholder="Enter your username" required>
                                 </div>
+                                <div id="login_username_error" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
+                                <label for="login_password" class="form-label">Password</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-transparent border-end-0">
-                                        <i class="bi bi-lock text-muted"></i>
-                                    </span>
                                     <input type="password" class="form-control auth-input border-start-0" 
-                                        id="password" name="password" 
+                                        id="login_password" name="password" 
                                         placeholder="Enter your password" required>
                                 </div>
+                                <div id="login_password_error" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
-                                <label class="form-check-label" for="remember_me">Keep me signed in</label>
+                                <input type="checkbox" class="form-check-input" id="login_remember_me" name="remember_me">
+                                <label class="form-check-label" for="login_remember_me">Keep me signed in</label>
                                 <small class="form-text text-muted d-block">
                                     Not recommended for shared computers
                                 </small>

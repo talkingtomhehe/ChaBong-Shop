@@ -11,50 +11,43 @@
                             <div class="alert alert-danger"><?php echo $error; ?></div>
                         <?php endif; ?>
                         
-                        <form method="post" action="<?php echo SITE_URL; ?>user/signup">
+                        <form id="registerForm" method="post" action="<?php echo SITE_URL; ?>user/signup">
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
+                                <label for="register_username" class="form-label">Username</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-transparent border-end-0">
-                                        <i class="bi bi-person text-muted"></i>
-                                    </span>
                                     <input type="text" class="form-control auth-input border-start-0" 
-                                           id="username" name="username" 
-                                           placeholder="Choose a username" required>
+                                        id="register_username" name="username" 
+                                        placeholder="Choose a username (min. 5 characters)" required>
                                 </div>
+                                <div id="register_username_error" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
+                                <label for="register_email" class="form-label">Email</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-transparent border-end-0">
-                                        <i class="bi bi-envelope text-muted"></i>
-                                    </span>
                                     <input type="email" class="form-control auth-input border-start-0" 
-                                           id="email" name="email" 
-                                           placeholder="Enter your email address" required>
+                                        id="register_email" name="email" 
+                                        placeholder="Enter your email address" required>
                                 </div>
+                                <div id="register_email_error" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
+                                <label for="register_password" class="form-label">Password</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-transparent border-end-0">
-                                        <i class="bi bi-lock text-muted"></i>
-                                    </span>
                                     <input type="password" class="form-control auth-input border-start-0" 
-                                           id="password" name="password" 
-                                           placeholder="Create a strong password" required>
+                                        id="register_password" name="password" 
+                                        placeholder="Create a strong password (min. 8 characters)" required>
                                 </div>
+                                <div id="register_password_error" class="invalid-feedback"></div>
+                                <!-- Password strength indicator will be added here by JS -->
                             </div>
                             <div class="mb-3">
-                                <label for="confirm_password" class="form-label">Confirm Password</label>
+                                <label for="register_confirm_password" class="form-label">Confirm Password</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-transparent border-end-0">
-                                        <i class="bi bi-shield-lock text-muted"></i>
-                                    </span>
                                     <input type="password" class="form-control auth-input border-start-0" 
-                                           id="confirm_password" name="confirm_password" 
-                                           placeholder="Confirm your password" required>
+                                        id="register_confirm_password" name="confirm_password" 
+                                        placeholder="Confirm your password" required>
                                 </div>
+                                <div id="register_confirm_password_error" class="invalid-feedback"></div>
                             </div>
                             <p class="mt-3 small text-muted">
                                 By signing up, you agree to our <a href="#" class="auth-link">Terms of Service</a> and <a href="#" class="auth-link">Privacy Policy</a>.
