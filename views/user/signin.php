@@ -34,6 +34,13 @@
                                         placeholder="Enter your password" required>
                                 </div>
                             </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
+                                <label class="form-check-label" for="remember_me">Keep me signed in</label>
+                                <small class="form-text text-muted d-block">
+                                    Not recommended for shared computers
+                                </small>
+                            </div>
                             <div class="d-flex justify-content-end mb-4">
                                 <a href="#" class="forgot-link">Forgot password?</a>
                             </div>

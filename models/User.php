@@ -296,4 +296,10 @@ class User {
         // Return default avatar path (without SITE_URL)
         return 'public/images/avatars/default.png';
     }
+
+    public function updateLastLogin($userId) {
+        $userId = (int)$userId;
+        $sql = "UPDATE {$this->table} SET last_login = NOW() WHERE id = {$userId}";
+        return $this->db->query($sql);
+    }
 }

@@ -2,6 +2,7 @@
 require_once 'models/Cart.php';
 require_once 'models/Product.php';
 require_once 'models/Category.php';
+require_once 'includes/SessionManager.php';
 
 class CartController {
     private $cartModel;
@@ -18,7 +19,7 @@ class CartController {
         global $action;
         
         // Check if user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!SessionManager::isUserLoggedIn()) {
             $_SESSION['redirect_after_login'] = SITE_URL . 'cart';
             header('Location: ' . SITE_URL . 'user/login');
             exit;
@@ -48,7 +49,7 @@ class CartController {
             $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
             $buyNow = isset($_POST['buy_now']) && $_POST['buy_now'] == '1';
             // Check if user is logged in
-            if (!isset($_SESSION['user_id'])) {
+            if (!SessionManager::isUserLoggedIn()) {
                 // Return JSON with redirect
                 echo json_encode([
                     'success' => false, 
@@ -124,7 +125,7 @@ class CartController {
     
     public function update() {
         // Check if user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!SessionManager::isUserLoggedIn()) {
             echo json_encode(['success' => false, 'message' => 'Please log in to update your cart']);
             exit;
         }
@@ -175,7 +176,7 @@ class CartController {
     
     public function remove() {
         // Check if user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!SessionManager::isUserLoggedIn()) {
             echo json_encode(['success' => false, 'message' => 'Please log in to remove items from your cart']);
             exit;
         }
@@ -225,7 +226,7 @@ class CartController {
 
     public function clear() {
         // Check if user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!SessionManager::isUserLoggedIn()) {
             echo json_encode(['success' => false, 'message' => 'Please log in to clear your cart']);
             exit;
         }
@@ -243,7 +244,7 @@ class CartController {
     
     public function checkout() {
         // Check if user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!SessionManager::isUserLoggedIn()) {
             $_SESSION['redirect_after_login'] = SITE_URL . 'cart/checkout';
             header('Location: ' . SITE_URL . 'user/login');
             exit;

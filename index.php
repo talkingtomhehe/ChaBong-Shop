@@ -1,9 +1,10 @@
 <?php
-// filepath: c:\xampp\htdocs\chabongshop\index.php
 // Main routing file
 
-// Start session
-session_start();
+// Include SessionManager
+require_once 'includes/SessionManager.php';
+// Initialize session
+SessionManager::init();
 
 // Include configuration files
 require_once 'config/config.php';
@@ -11,14 +12,23 @@ require_once 'config/database.php';
 require_once 'includes/functions.php';
 
 // Update user's last activity timestamp if logged in
-if (isset($_SESSION['user_id'])) {
-    // Check if User class is already loaded
-    if (!class_exists('User')) {
-        require_once __DIR__ . '\models\User.php';
-        $db = new Database();
-        $userActivityModel = new User($db->getConnection());
-        $userActivityModel->updateLastActivity($_SESSION['user_id']);
-    }
+if (SessionManager::isUserLoggedIn()) {
+    // Update session activity
+    SessionManager::updateActivity();
+    
+    // Update user's last activity in database
+    require_once 'models/User.php';
+    $db = new Database();
+    $userActivityModel = new User($db->getConnection());
+    $userActivityModel->updateLastActivity($_SESSION['user_id']);
+}
+
+// Check for session timeout (2 hours)
+if (SessionManager::checkSessionTimeout(7200)) {
+    // Session timed out, redirect to login with message
+    $_SESSION['login_error'] = 'Your session has expired. Please log in again.';
+    header('Location: ' . SITE_URL . 'user/login');
+    exit;
 }
 
 // Parse the URL to determine controller and action
@@ -54,6 +64,8 @@ switch ($controller) {
             $productController->category($id);
         } elseif ($action === 'search') {
             $productController->search();
+        } elseif ($action === 'ajax-search') {
+            $productController->ajaxSearch();
         } else {
             $productController->index();
         }

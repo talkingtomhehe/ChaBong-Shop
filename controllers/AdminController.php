@@ -17,17 +17,10 @@ class AdminController {
         $this->userModel = new User();
     }
     
-    // Check if admin is logged in
-    private function checkAdminAuth() {
-        if (!isset($_SESSION['admin_id'])) {
-            header('Location: ' . SITE_URL . 'admin/login');
-            exit;
-        }
-    }
-    
     public function login() {
         // If admin is already logged in, redirect to dashboard
-        if (isset($_SESSION['admin_id'])) {
+        require_once 'includes/SessionManager.php';
+        if (SessionManager::isAdminLoggedIn()) {
             header('Location: ' . SITE_URL . 'admin/dashboard');
             exit;
         }
@@ -45,9 +38,7 @@ class AdminController {
                 
                 if ($admin) {
                     // Set session and redirect
-                    $_SESSION['admin_id'] = $admin['id'];
-                    $_SESSION['admin_username'] = $admin['username'];
-                    $_SESSION['is_admin'] = true;
+                    SessionManager::setAdmin($admin['id'], $admin['username']);
                     
                     header('Location: ' . SITE_URL . 'admin/dashboard');
                     exit;
@@ -64,6 +55,25 @@ class AdminController {
         include VIEWS_PATH . 'admin/layouts/header.php';
         include VIEWS_PATH . 'admin/login.php';
         include VIEWS_PATH . 'admin/layouts/footer.php';
+    }
+    
+    public function logout() {
+        // Use SessionManager for secure logout
+        require_once 'includes/SessionManager.php';
+        SessionManager::logout();
+        
+        // Redirect to admin login
+        header('Location: ' . SITE_URL . 'admin/login');
+        exit;
+    }
+    
+    // Update checkAdminAuth method
+    private function checkAdminAuth() {
+        require_once 'includes/SessionManager.php';
+        if (!SessionManager::isAdminLoggedIn()) {
+            header('Location: ' . SITE_URL . 'admin/login');
+            exit;
+        }
     }
     
     public function dashboard() {
@@ -132,17 +142,6 @@ class AdminController {
         include VIEWS_PATH . 'admin/layouts/header.php';
         include VIEWS_PATH . 'admin/dashboard.php';
         include VIEWS_PATH . 'admin/layouts/footer.php';
-    }
-    
-    public function logout() {
-        // Remove admin session variables
-        unset($_SESSION['admin_id']);
-        unset($_SESSION['admin_username']);
-        unset($_SESSION['is_admin']);
-        
-        // Redirect to admin login
-        header('Location: ' . SITE_URL . 'admin/login');
-        exit;
     }
     
     /*** PRODUCT MANAGEMENT ***/

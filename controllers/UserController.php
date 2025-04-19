@@ -1,6 +1,7 @@
 <?php
 require_once 'models/User.php';
 require_once 'models/Category.php';
+require_once 'includes/SessionManager.php';
 
 class UserController {
     private $userModel;
@@ -19,6 +20,7 @@ class UserController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = isset($_POST['username']) ? $_POST['username'] : '';
             $password = isset($_POST['password']) ? $_POST['password'] : '';
+            $rememberMe = isset($_POST['remember_me']) ? true : false;
             
             if (empty($username) || empty($password)) {
                 $error = 'Please fill in all fields';
@@ -26,12 +28,22 @@ class UserController {
                 $user = $this->userModel->login($username, $password);
                 
                 if ($user) {
-                    // User login successful
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['username'] = $user['username'];
+                    // User login successful using SessionManager
+                    require_once 'includes/SessionManager.php';
+                    SessionManager::setUser($user['id'], $user['username'], $rememberMe);
                     
-                    // Redirect to user dashboard or home
-                    header('Location: ' . SITE_URL);
+                    // Update last login time
+                    $this->userModel->updateLastLogin($user['id']);
+                    
+                    // Check if there's a redirect after login
+                    if (isset($_SESSION['redirect_after_login'])) {
+                        $redirect = $_SESSION['redirect_after_login'];
+                        unset($_SESSION['redirect_after_login']);
+                        header('Location: ' . $redirect);
+                    } else {
+                        // Redirect to home
+                        header('Location: ' . SITE_URL);
+                    }
                     exit;
                 } else {
                     $error = 'Invalid username or password';
@@ -41,7 +53,7 @@ class UserController {
         
         // Get all categories for the navbar
         $categories = $this->categoryModel->getAllCategories();
-
+    
         $controller = 'user';
         
         // Page title
@@ -51,6 +63,16 @@ class UserController {
         include VIEWS_PATH . 'layouts/header.php';
         include VIEWS_PATH . 'user/signin.php';
         include VIEWS_PATH . 'layouts/footer.php';
+    }
+    
+    public function logout() {
+        // Use SessionManager for secure logout
+        require_once 'includes/SessionManager.php';
+        SessionManager::logout();
+        
+        // Redirect to home
+        header('Location: ' . SITE_URL);
+        exit;
     }
     
     public function signup() {
@@ -95,22 +117,11 @@ class UserController {
         include VIEWS_PATH . 'user/signup.php';
         include VIEWS_PATH . 'layouts/footer.php';
     }
-    
-    public function logout() {
-        // Remove all session variables
-        session_unset();
-        
-        // Destroy the session
-        session_destroy();
-        
-        // Redirect to home
-        header('Location: ' . SITE_URL);
-        exit;
-    }
 
     public function orders() {
         // Check if user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!SessionManager::isUserLoggedIn()) {
+            $_SESSION['redirect_after_login'] = SITE_URL . 'user/orders';
             header('Location: ' . SITE_URL . 'user/login');
             exit;
         }
@@ -134,7 +145,8 @@ class UserController {
     
     public function orderDetail($id) {
         // Check if user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!SessionManager::isUserLoggedIn()) {
+            $_SESSION['redirect_after_login'] = SITE_URL . 'user/order-detail/' . $id;
             header('Location: ' . SITE_URL . 'user/login');
             exit;
         }
@@ -167,7 +179,8 @@ class UserController {
 
     public function profile() {
         // Check if user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!SessionManager::isUserLoggedIn()) {
+            $_SESSION['redirect_after_login'] = SITE_URL . 'user/profile';
             header('Location: ' . SITE_URL . 'user/login');
             exit;
         }
@@ -283,7 +296,8 @@ class UserController {
 
     public function updateAvatar() {
         // Check if user is logged in
-        if (!isset($_SESSION['user_id'])) {
+        if (!SessionManager::isUserLoggedIn()) {
+            $_SESSION['redirect_after_login'] = SITE_URL . 'user/profile';
             header('Location: ' . SITE_URL . 'user/login');
             exit;
         }

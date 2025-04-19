@@ -401,7 +401,7 @@ h3.section-title {
 
 /* Product details page */
 .product-title {
-    color: #444444; /* IMPROVED: Changed from #6d5741 to darker gray for better readability */
+    color: #444444;
     font-weight: 600;
 }
 
@@ -417,7 +417,7 @@ h3.section-title {
 }
 
 .product-description {
-    color: #444444; /* IMPROVED: Changed from #6d5741 to darker gray for better readability */
+    color: #444444;
     line-height: 1.6;
 }
 
@@ -431,7 +431,7 @@ h3.section-title {
 
 /* Product name in details page */
 .product-details h1 {
-    color: #b77c52;
+    color: #000;
     font-weight: 600;
 }
 
@@ -1168,4 +1168,243 @@ section .h2 {
 /* Prevent offcanvas from affecting mobile cart */
 body.offcanvas-active .mobile-cart {
     display: none !important;
+}
+
+/* ==================================================
+   14. AJAX Search Dropdown Styling - IMPROVED
+   ================================================== */
+.search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 0 0 0.25rem 0.25rem;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+    z-index: 1050;
+    margin-top: 1px;
+    padding: 0;
+}
+
+.search-results-header {
+    padding: 12px 15px;
+    font-weight: 600;
+    color: #777777;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9e2d9;
+    font-size: 14px;
+}
+
+.search-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #444444;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.search-item:hover {
+    background-color: #f5f0e9;
+    text-decoration: none;
+    color: #444444;
+}
+
+.search-item-image {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.search-item-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.search-item-info {
+    flex: 1;
+}
+
+.search-item-name {
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: #444444;
+    line-height: 1.3;
+}
+
+.search-item-price {
+    font-size: 13px;
+    font-weight: 600;
+    color: #b77c52;
+}
+
+.search-no-results {
+    padding: 20px 15px;
+    text-align: center;
+    color: #777777;
+    font-size: 14px;
+}
+
+.search-view-all {
+    padding: 12px 15px;
+    text-align: center;
+    border-top: 1px solid #e9e2d9;
+    background-color: #f8f9fa;
+}
+
+.search-view-all a {
+    color: #b77c52;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+}
+
+.search-view-all a:hover {
+    text-decoration: underline;
+}
+
+/* Improved highlight style */
+.highlight {
+    background-color: rgba(183, 124, 82, 0.2);
+    padding: 0 2px;
+    border-radius: 2px;
+    font-weight: 600;
+}
+
+#search-hints, #mobile-search-hints {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    z-index: 1050;
+    margin-top: 1px;
+    padding: 0;
+}
+
+.search-hint-header {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #777777;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9e2d9;
+}
+
+.search-hint-item {
+    display: flex;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    text-decoration: none;
+    color: #444444;
+    transition: background-color 0.2s ease;
+}
+
+.search-hint-item:hover {
+    background-color: #f5f0e9;
+    text-decoration: none;
+    color: #444444;
+}
+
+.search-hint-image {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.search-hint-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.search-hint-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.search-hint-title {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.search-hint-price {
+    font-weight: 600;
+    color: #b77c52;
+    font-size: 0.9rem;
+}
+
+.search-no-results {
+    padding: 15px;
+    text-align: center;
+    color: #777;
+    font-style: italic;
+}
+
+.search-hint-footer {
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9e2d9;
+    text-align: center;
+}
+
+.search-all-btn {
+    color: #b77c52;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.search-all-btn:hover {
+    text-decoration: underline;
+}
+
+/* Mobile search dropdown positioning */
+@media (max-width: 991px) {
+    #mobile-search-hints {
+        position: absolute;
+        width: 100%;
+        top: 100%;
+        left: 0;
+        z-index: 1060;
+    }
+}
+
+/* Mobile search dropdown positioning */
+@media (max-width: 991px) {
+    .mobile-search {
+        position: relative;
+    }
+    
+    .mobile-search .search-results-dropdown {
+        top: calc(100% + 2px);
+    }
 }

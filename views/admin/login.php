@@ -34,6 +34,13 @@
                                     placeholder="Enter admin password" required>
                             </div>
                         </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
+                            <label class="form-check-label" for="remember_me">Keep me signed in</label>
+                            <small class="form-text text-muted d-block">
+                                Not recommended for shared computers
+                            </small>
+                        </div>
                         <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-primary">Sign In to Admin</button>
                         </div>

@@ -1,6 +1,7 @@
 <?php
 // filepath: c:\xampp\htdocs\petshop\views\layouts\header.php
 // Common header for all pages
+require_once __DIR__ . '/../../includes/SessionManager.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,13 +13,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>public/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const SITE_URL = '<?php echo SITE_URL; ?>';
+    </script>
+    <script src="<?php echo SITE_URL; ?>public/js/search.js"></script>
 </head>
 <body>
     <header>
         <!-- Utility bar (account, login, etc) -->
         <div class="utility-bar">
             <div class="container-fluid d-flex justify-content-end">
-                <?php if(isset($_SESSION['user_id'])): ?>
+                <?php if(SessionManager::isUserLoggedIn()): ?>
                     <div class="dropdown">
                         <?php 
                         // Get user avatar
@@ -67,7 +72,7 @@
                 </a>
                 
                 <!-- Mobile cart button - visible on small screens only -->
-                <?php if(isset($_SESSION['user_id'])): ?>
+                <?php if(SessionManager::isUserLoggedIn()): ?>
                 <div class="mobile-cart d-lg-none">
                     <a class="nav-link position-relative" href="<?php echo SITE_URL; ?>cart">
                         <i class="bi bi-cart3 fs-5"></i>
@@ -145,7 +150,7 @@
                 </div>
                 
                 <!-- Desktop cart button - hidden on small screens -->
-                <?php if(isset($_SESSION['user_id'])): ?>
+                <?php if(SessionManager::isUserLoggedIn()): ?>
                 <div class="nav-item d-none d-lg-block">
                     <a class="nav-link position-relative" href="<?php echo SITE_URL; ?>cart">
                         <i class="bi bi-cart3 fs-5"></i>
@@ -164,12 +169,24 @@
                 </div>
                 <?php endif; ?>
                 
-                <!-- Desktop search form - hidden on small screens -->
-                <form class="d-none d-lg-flex position-relative" role="search" action="<?php echo SITE_URL; ?>products/search" method="get">
-                    <input class="form-control search-input" type="search" name="search" placeholder="Search" aria-label="Search" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+                <!-- Desktop search form -->
+                <form id="live-search" class="d-none d-lg-flex position-relative" role="search" action="<?php echo SITE_URL; ?>products/search" method="get">
+                    <input id="search-input" class="form-control search-input" type="search" name="search" placeholder="Search" aria-label="Search" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
                     <button type="submit" class="btn" style="position: absolute; right: 0; border: none; top: 0; height: 100%; background: none;">
                         <i class="bi bi-search search-icon"></i>
                     </button>
+                    <div id="search-hints" class="d-none"></div>
+                </form>
+
+                <!-- Mobile search form -->
+                <form id="mobile-live-search" class="d-flex d-lg-none mt-3 mb-3 position-relative" role="search" action="<?php echo SITE_URL; ?>products/search" method="get">
+                    <div class="input-group">
+                        <input id="mobile-search-input" class="form-control" type="search" name="search" placeholder="Search products..." aria-label="Search" value="<?php echo isset($search) ? htmlspecialchars($search) : ''; ?>">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                    <div id="mobile-search-hints" class="d-none"></div>
                 </form>
             </div>
         </nav>

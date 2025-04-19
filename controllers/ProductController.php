@@ -165,15 +165,15 @@ class ProductController {
             
             // Get all categories for the navbar and sidebar
             $categories = $this->categoryModel->getAllCategories();
-
+    
             $controller = 'products';
             
             // Page title
             $pageTitle = 'Search: ' . htmlspecialchars($search);
             
-            // Load view
+            // Load view - use the dedicated search view instead of the index view
             include VIEWS_PATH . 'layouts/header.php';
-            include VIEWS_PATH . 'products/index.php';
+            include VIEWS_PATH . 'products/search.php';
             include VIEWS_PATH . 'layouts/footer.php';
         } else {
             // Redirect to products page if search is empty
@@ -187,5 +187,38 @@ class ProductController {
         include VIEWS_PATH . 'layouts/header.php';
         include VIEWS_PATH . 'errors/404.php';
         include VIEWS_PATH . 'layouts/footer.php';
+    }
+
+    public function ajaxSearch() {
+        // Get search query
+        $query = isset($_GET['query']) ? $_GET['query'] : '';
+        
+        // Perform search
+        $results = [];
+        if (!empty($query)) {
+            // Limit to 5 results in dropdown
+            $maxResults = 5;
+            $searchResults = $this->productModel->searchProducts($query, 'name', 'asc', $maxResults);
+            
+            if ($searchResults && $searchResults->num_rows > 0) {
+                while ($product = $searchResults->fetch_assoc()) {
+                    // Use image_url directly from the database, since that's the field name in your table
+                    $image = $product['image_url']; // Changed from 'image' to 'image_url'
+                    
+                    // Add to results array
+                    $results[] = [
+                        'id' => $product['id'],
+                        'name' => $product['name'],
+                        'price' => $product['price'],
+                        'image' => $image
+                    ];
+                }
+            }
+        }
+        
+        // Return JSON response
+        header('Content-Type: application/json');
+        echo json_encode($results);
+        exit;
     }
 }
