@@ -53,6 +53,10 @@
                 </tbody>
             </table>
         </div>
+        <?php
+        // Include pagination
+        include VIEWS_PATH . 'shared/pagination.php';
+        ?>
     </div>
 </div>
 

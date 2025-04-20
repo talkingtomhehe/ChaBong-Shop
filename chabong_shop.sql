@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 19, 2025 lúc 11:00 PM
+-- Thời gian đã tạo: Th4 20, 2025 lúc 04:50 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -230,9 +230,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`, `full_name`, `phone`, `address`, `city`, `postal_code`, `updated_at`, `state`, `last_activity`, `last_login`, `avatar`, `google_id`, `remember_token`, `token_expires`) VALUES
-(1, 'user1', 'user1@gmail.com', '$2y$10$2rG1e/2nVzKbIIM0Rdn.B.4aB1KEvfX0uJnhlis7IYJgXf.LsNBEW', '2025-04-04 21:49:36', 'user1 nguyen', '32434324', '68/2A', 'tphcm', '1112', '2025-04-19 20:58:08', NULL, '2025-04-19 20:58:08', '2025-04-19 20:52:43', 'public/images/avatars/avatar_1_67f1c09bb795b.jpg', NULL, NULL, NULL),
+(1, 'user1', 'user1@gmail.com', '$2y$10$2MzpotsMrUbSAx5TYkMfQufy7IRwBubWIlI4g/ZCfrbnNqzyvVcAC', '2025-04-04 21:49:36', 'user1 nguyen', '32434324', '68/2A', 'tphcm', '1112', '2025-04-20 12:18:49', NULL, '2025-04-20 12:18:49', '2025-04-20 12:10:45', 'public/images/avatars/avatar_1_67f1c09bb795b.jpg', NULL, NULL, NULL),
 (2, 'user2', 'user2@gmail.com', '$2y$10$6J4TvmWFCA2o08k4QamEy.5U7BaB5XAe4goou2BVaq2TEKZmyiSgS', '2025-04-05 17:00:17', NULL, NULL, NULL, NULL, NULL, '2025-04-06 22:59:19', NULL, '2025-04-06 22:59:19', NULL, 'public/images/avatars/avatar_2_67f1e05ab1d89.jpg', NULL, NULL, NULL),
-(3, 'phankhanhnhan01', 'phankhanhnhan01@gmail.com', '$2y$10$V2WKQTjIfSplFNKbheTSuuDTXYlMtncDEDQWhZzYI4w/eLeI770wS', '2025-04-06 01:32:38', 'Nhân Phan', NULL, NULL, NULL, NULL, '2025-04-06 20:41:17', NULL, '2025-04-06 20:41:17', '2025-04-06 20:37:19', 'https://lh3.googleusercontent.com/a/ACg8ocIbDIbyks-c0qGWVK-Vq44Xfus5vtRh0ro4k6aVLnHAORBIdg=s96-c', '103729317953199544120', NULL, NULL);
+(3, 'phankhanhnhan01', 'phankhanhnhan01@gmail.com', '$2y$10$V2WKQTjIfSplFNKbheTSuuDTXYlMtncDEDQWhZzYI4w/eLeI770wS', '2025-04-06 01:32:38', 'Nhân Phan', NULL, NULL, NULL, NULL, '2025-04-06 20:41:17', NULL, '2025-04-06 20:41:17', '2025-04-06 20:37:19', 'https://lh3.googleusercontent.com/a/ACg8ocIbDIbyks-c0qGWVK-Vq44Xfus5vtRh0ro4k6aVLnHAORBIdg=s96-c', '103729317953199544120', NULL, NULL),
+(4, 'user3', 'user3@gmail.com', '$2y$10$dZO.9iCiF1xezZlgjsEYBeVfHGNtS4NZhws4hGYz3/dNMa7Ll1sP.', '2025-04-20 11:55:26', NULL, NULL, NULL, NULL, NULL, '2025-04-20 11:55:46', NULL, '2025-04-20 11:55:46', '2025-04-20 11:55:43', NULL, NULL, NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -345,7 +346,7 @@ ALTER TABLE `store_locations`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
