@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="card-title mb-0">All Orders</h5>
-            
+
             <!-- Status filter -->
             <div class="btn-group">
                 <a href="<?php echo SITE_URL; ?>admin/orders" class="btn <?php echo empty($_GET['status']) ? 'btn-primary' : 'btn-outline-primary'; ?>">
@@ -25,7 +25,7 @@
                 </a>
             </div>
         </div>
-        
+
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
@@ -40,7 +40,7 @@
                 </thead>
                 <tbody>
                     <?php if ($orders && $orders->num_rows > 0): ?>
-                        <?php while($order = $orders->fetch_assoc()): ?>
+                        <?php while ($order = $orders->fetch_assoc()): ?>
                             <tr>
                                 <td>#<?php echo $order['id']; ?></td>
                                 <td>
@@ -51,7 +51,7 @@
                                 <td>
                                     <?php
                                     $statusClass = 'bg-secondary';
-                                    switch($order['status']) {
+                                    switch ($order['status']) {
                                         case 'pending':
                                             $statusClass = 'bg-warning text-dark';
                                             break;
@@ -87,5 +87,9 @@
                 </tbody>
             </table>
         </div>
+        <?php
+        // Include pagination
+        include VIEWS_PATH . 'shared/pagination.php';
+        ?>
     </div>
 </div>

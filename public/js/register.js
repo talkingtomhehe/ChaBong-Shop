@@ -1,8 +1,3 @@
-/**
- * Form validation script for registration form
- * Woof-woof PetShop
- */
-
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize registration validation only if registration form exists
     const registerForm = document.getElementById('registerForm');
@@ -32,6 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
             special: /[!@#$%^&*(),.?":{}|<>]/
         }
     };
+    
+    // Track if server validation is in progress
+    let checkingUsername = false;
+    let checkingEmail = false;
     
     // Debounce function
     function debounce(func, delay) {
@@ -67,15 +66,33 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Form submission
     registerForm.addEventListener('submit', function(e) {
+        // First, check if there are any ongoing validation checks
+        if (checkingUsername || checkingEmail) {
+            e.preventDefault();
+            alert('Please wait while we validate your username and email.');
+            return;
+        }
+        
+        // Check if fields with error messages exist
+        const usernameHasError = usernameField.classList.contains('is-invalid');
+        const emailHasError = emailField.classList.contains('is-invalid');
+        
         // Validate all fields
-        const isUsernameValid = validateUsername(usernameField.value);
-        const isEmailValid = validateEmail(emailField.value);
         const isPasswordValid = validatePassword(passwordField.value);
         const isConfirmValid = validateConfirmPassword(confirmPasswordField.value, passwordField.value);
         
         // Prevent form submission if validation fails
-        if (!isUsernameValid || !isEmailValid || !isPasswordValid || !isConfirmValid) {
+        if (usernameHasError || emailHasError || !isPasswordValid || !isConfirmValid) {
             e.preventDefault();
+            
+            // Show a message indicating which fields have errors
+            if (usernameHasError) {
+                usernameError.style.display = 'block';
+            }
+            
+            if (emailHasError) {
+                emailError.style.display = 'block';
+            }
         }
     });
     
@@ -115,9 +132,11 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
-        // If we got here, username is valid
-        usernameField.classList.add('is-valid');
-        return true;
+        // Check if username already exists
+        checkUsernameExists(username);
+        
+        // Return true for now, the ajax callback will handle the validation result
+        return !checkingUsername;
     }
     
     /**
@@ -146,9 +165,89 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
         
-        // If we got here, email is valid
-        emailField.classList.add('is-valid');
-        return true;
+        // Check if email already exists
+        checkEmailExists(email);
+        
+        // Return true for now, the ajax callback will handle the validation result
+        return !checkingEmail;
+    }
+    
+    /**
+     * Check if username already exists via AJAX
+     */
+    function checkUsernameExists(username) {
+        // Only check if the username is valid according to pattern
+        if (!patterns.username.test(username)) return;
+        
+        checkingUsername = true;
+        
+        // Add spinner to indicate checking
+        usernameField.classList.add('is-checking');
+        
+        // Create URL with query parameter
+        const url = new URL(window.location.origin + '/petshop/ajax/check-username');
+        url.searchParams.append('username', username);
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                checkingUsername = false;
+                usernameField.classList.remove('is-checking');
+                
+                if (data.exists) {
+                    // Username already exists
+                    usernameError.textContent = 'This username is already taken';
+                    usernameError.style.display = 'block';
+                    usernameField.classList.add('is-invalid');
+                } else {
+                    // Username is available
+                    usernameField.classList.add('is-valid');
+                }
+            })
+            .catch(error => {
+                console.error('Error checking username:', error);
+                checkingUsername = false;
+                usernameField.classList.remove('is-checking');
+            });
+    }
+    
+    /**
+     * Check if email already exists via AJAX
+     */
+    function checkEmailExists(email) {
+        // Only check if the email is valid according to pattern
+        if (!patterns.email.test(email)) return;
+        
+        checkingEmail = true;
+        
+        // Add spinner to indicate checking
+        emailField.classList.add('is-checking');
+        
+        // Create URL with query parameter
+        const url = new URL(window.location.origin + '/petshop/ajax/check-email');
+        url.searchParams.append('email', email);
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                checkingEmail = false;
+                emailField.classList.remove('is-checking');
+                
+                if (data.exists) {
+                    // Email already exists
+                    emailError.textContent = 'This email is already registered';
+                    emailError.style.display = 'block';
+                    emailField.classList.add('is-invalid');
+                } else {
+                    // Email is available
+                    emailField.classList.add('is-valid');
+                }
+            })
+            .catch(error => {
+                console.error('Error checking email:', error);
+                checkingEmail = false;
+                emailField.classList.remove('is-checking');
+            });
     }
     
     /**

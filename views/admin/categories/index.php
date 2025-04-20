@@ -6,7 +6,7 @@
                 <i class="bi bi-plus-lg"></i> Add New Category
             </a>
         </div>
-        
+
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
@@ -20,7 +20,7 @@
                 </thead>
                 <tbody>
                     <?php if ($categories && $categories->num_rows > 0): ?>
-                        <?php while($category = $categories->fetch_assoc()): 
+                        <?php while ($category = $categories->fetch_assoc()):
                             // Count products in this category
                             $productsInCategory = $this->productModel->getProductsByCategory($category['id']);
                             $productCount = $productsInCategory ? $productsInCategory->num_rows : 0;
@@ -35,10 +35,10 @@
                                         <a href="<?php echo SITE_URL; ?>admin/edit-category/<?php echo $category['id']; ?>" class="btn btn-outline-primary">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <button type="button" class="btn btn-outline-danger delete-category" 
-                                                data-id="<?php echo $category['id']; ?>" 
-                                                data-name="<?php echo htmlspecialchars($category['name']); ?>"
-                                                data-product-count="<?php echo $productCount; ?>">
+                                        <button type="button" class="btn btn-outline-danger delete-category"
+                                            data-id="<?php echo $category['id']; ?>"
+                                            data-name="<?php echo htmlspecialchars($category['name']); ?>"
+                                            data-product-count="<?php echo $productCount; ?>">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </div>
@@ -86,17 +86,17 @@
         const categoryHasProductsWarning = document.getElementById('categoryHasProductsWarning');
         const confirmDeleteBtn = document.getElementById('confirmDelete');
         let categoryIdToDelete = null;
-        
+
         document.querySelectorAll('.delete-category').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.dataset.id;
                 const name = this.dataset.name;
                 const productCount = parseInt(this.dataset.productCount);
-                
+
                 categoryIdToDelete = id;
                 document.getElementById('categoryName').textContent = name;
                 document.getElementById('productCount').textContent = productCount;
-                
+
                 // Show warning and disable delete button if category has products
                 if (productCount > 0) {
                     categoryHasProductsWarning.style.display = 'block';
@@ -105,36 +105,36 @@
                     categoryHasProductsWarning.style.display = 'none';
                     confirmDeleteBtn.disabled = false;
                 }
-                
+
                 deleteModal.show();
             });
         });
-        
+
         document.getElementById('confirmDelete').addEventListener('click', function() {
             if (categoryIdToDelete && !this.disabled) {
                 const formData = new FormData();
                 formData.append('id', categoryIdToDelete);
-                
+
                 fetch('<?php echo SITE_URL; ?>admin/delete-category', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Show success message and reload page
-                        alert(data.message);
-                        location.reload();
-                    } else {
-                        alert(data.message);
-                    }
-                    deleteModal.hide();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while deleting the category');
-                    deleteModal.hide();
-                });
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show success message and reload page
+                            alert(data.message);
+                            location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                        deleteModal.hide();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while deleting the category');
+                        deleteModal.hide();
+                    });
             }
         });
     });

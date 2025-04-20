@@ -6,7 +6,7 @@
                 <i class="bi bi-plus-lg"></i> Add New Product
             </a>
         </div>
-        
+
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                     <?php if ($products && $products->num_rows > 0): ?>
-                        <?php while($product = $products->fetch_assoc()): ?>
+                        <?php while ($product = $products->fetch_assoc()): ?>
                             <tr>
                                 <td><?php echo $product['id']; ?></td>
                                 <td>
@@ -36,7 +36,7 @@
                                 <td><?php echo htmlspecialchars($product['name']); ?></td>
                                 <td>$<?php echo number_format($product['price'], 2); ?></td>
                                 <td>
-                                    <?php 
+                                    <?php
                                     // Get category name
                                     $category = $categoryModel->getCategoryById($product['category_id']);
                                     echo $category ? htmlspecialchars($category['name']) : 'N/A';
@@ -70,6 +70,10 @@
                 </tbody>
             </table>
         </div>
+        <?php
+        // Include pagination
+        include VIEWS_PATH . 'shared/pagination.php';
+        ?>
     </div>
 </div>
 
@@ -98,43 +102,43 @@
     document.addEventListener('DOMContentLoaded', function() {
         const deleteModal = new bootstrap.Modal(document.getElementById('deleteProductModal'));
         let productIdToDelete = null;
-        
+
         document.querySelectorAll('.delete-product').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.dataset.id;
                 const name = this.dataset.name;
-                
+
                 productIdToDelete = id;
                 document.getElementById('productName').textContent = name;
                 deleteModal.show();
             });
         });
-        
+
         document.getElementById('confirmDelete').addEventListener('click', function() {
             if (productIdToDelete) {
                 const formData = new FormData();
                 formData.append('id', productIdToDelete);
-                
+
                 fetch('<?php echo SITE_URL; ?>admin/delete-product', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Show success message and reload page
-                        alert(data.message);
-                        location.reload();
-                    } else {
-                        alert(data.message);
-                    }
-                    deleteModal.hide();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while deleting the product');
-                    deleteModal.hide();
-                });
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show success message and reload page
+                            alert(data.message);
+                            location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                        deleteModal.hide();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while deleting the product');
+                        deleteModal.hide();
+                    });
             }
         });
     });

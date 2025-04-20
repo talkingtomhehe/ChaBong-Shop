@@ -15,7 +15,7 @@ require_once 'includes/functions.php';
 if (SessionManager::isUserLoggedIn()) {
     // Update session activity
     SessionManager::updateActivity();
-    
+
     // Update user's last activity in database
     require_once 'models/User.php';
     $db = new Database();
@@ -57,7 +57,7 @@ switch ($controller) {
     case 'products':
         require_once 'controllers/ProductController.php';
         $productController = new ProductController();
-        
+
         if ($action === 'detail' && $id) {
             $productController->detail($id);
         } elseif ($action === 'category' && $id) {
@@ -70,11 +70,11 @@ switch ($controller) {
             $productController->index();
         }
         break;
-    
+
     case 'home':
         require_once 'controllers/HomeController.php';
         $homeController = new HomeController();
-        
+
         if ($action === 'index') {
             $homeController->index();
         } else {
@@ -91,7 +91,7 @@ switch ($controller) {
     case 'user':
         require_once 'controllers/UserController.php';
         $userController = new UserController();
-        
+
         if ($action === 'login') {
             $userController->login();
         } elseif ($action === 'google-login') {
@@ -118,14 +118,14 @@ switch ($controller) {
     case 'admin':
         require_once 'controllers/AdminController.php';
         $adminController = new AdminController();
-        
+
         if ($action === 'login') {
             $adminController->login();
         } elseif ($action === 'logout') {
             $adminController->logout();
         } elseif ($action === 'dashboard') {
             $adminController->dashboard();
-        } 
+        }
         // Products management
         elseif ($action === 'products') {
             $adminController->products();
@@ -151,8 +151,7 @@ switch ($controller) {
             $adminController->users();
         } elseif ($action === 'delete-user') {
             $adminController->deleteUser();
-        }
-        elseif ($action === 'get-online-users') {
+        } elseif ($action === 'get-online-users') {
             $adminController->getOnlineUsers();
         }
         // Order management
@@ -164,8 +163,7 @@ switch ($controller) {
             $adminController->updateOrderStatus();
         } elseif ($action === 'locations') {
             $adminController->locations();
-        }
-        else {
+        } else {
             $adminController->login();
         }
         break;
@@ -173,22 +171,33 @@ switch ($controller) {
     case 'cart':
         require_once 'controllers/CartController.php';
         $cartController = new CartController();
-        
+
         if ($action === 'add') {
             $cartController->add();
         } elseif ($action === 'update') {
             $cartController->update();
         } elseif ($action === 'remove') {
             $cartController->remove();
-        } elseif ($action === 'clear') {  
-            $cartController->clear();      
+        } elseif ($action === 'clear') {
+            $cartController->clear();
         } elseif ($action === 'checkout') {
             $cartController->checkout();
         } else {
             $cartController->index();
         }
         break;
-    
+
+    case 'ajax':
+        require_once 'controllers/AjaxController.php';
+        $ajaxController = new AjaxController();
+
+        if ($action === 'check-username') {
+            $ajaxController->checkUsername();
+        } elseif ($action === 'check-email') {
+            $ajaxController->checkEmail();
+        }
+        break;
+
     default:
         require_once 'controllers/HomeController.php';
         $homeController = new HomeController();

@@ -1,7 +1,7 @@
 <div class="card border-0 shadow-sm">
     <div class="card-body">
         <h5 class="card-title mb-4">All Users</h5>
-        
+
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
@@ -15,16 +15,16 @@
                 </thead>
                 <tbody>
                     <?php if ($users && $users->num_rows > 0): ?>
-                        <?php while($user = $users->fetch_assoc()): ?>
+                        <?php while ($user = $users->fetch_assoc()): ?>
                             <tr>
                                 <td><?php echo $user['id']; ?></td>
                                 <td><?php echo htmlspecialchars($user['username']); ?></td>
                                 <td><?php echo htmlspecialchars($user['email']); ?></td>
                                 <td><?php echo date('M j, Y', strtotime($user['created_at'])); ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-outline-danger delete-user" 
-                                            data-id="<?php echo $user['id']; ?>" 
-                                            data-username="<?php echo htmlspecialchars($user['username']); ?>">
+                                    <button type="button" class="btn btn-sm btn-outline-danger delete-user"
+                                        data-id="<?php echo $user['id']; ?>"
+                                        data-username="<?php echo htmlspecialchars($user['username']); ?>">
                                         <i class="bi bi-trash"></i> Delete
                                     </button>
                                 </td>
@@ -38,6 +38,10 @@
                 </tbody>
             </table>
         </div>
+        <?php
+        // Include pagination
+        include VIEWS_PATH . 'shared/pagination.php';
+        ?>
     </div>
 </div>
 
@@ -66,43 +70,43 @@
     document.addEventListener('DOMContentLoaded', function() {
         const deleteModal = new bootstrap.Modal(document.getElementById('deleteUserModal'));
         let userIdToDelete = null;
-        
+
         document.querySelectorAll('.delete-user').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.dataset.id;
                 const username = this.dataset.username;
-                
+
                 userIdToDelete = id;
                 document.getElementById('userName').textContent = username;
                 deleteModal.show();
             });
         });
-        
+
         document.getElementById('confirmDelete').addEventListener('click', function() {
             if (userIdToDelete) {
                 const formData = new FormData();
                 formData.append('id', userIdToDelete);
-                
+
                 fetch('<?php echo SITE_URL; ?>admin/delete-user', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Show success message and reload page
-                        alert(data.message);
-                        location.reload();
-                    } else {
-                        alert(data.message);
-                    }
-                    deleteModal.hide();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while deleting the user');
-                    deleteModal.hide();
-                });
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show success message and reload page
+                            alert(data.message);
+                            location.reload();
+                        } else {
+                            alert(data.message);
+                        }
+                        deleteModal.hide();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while deleting the user');
+                        deleteModal.hide();
+                    });
             }
         });
     });
