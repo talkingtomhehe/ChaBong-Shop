@@ -1436,3 +1436,270 @@ body.offcanvas-active .mobile-cart {
         top: calc(100% + 2px);
     }
 }
+
+/* ==================================================
+   21. Small Smartphone Optimization (Width < 400px)
+   ================================================== */
+
+   @media (max-width: 399px) {
+    /* Adjust product cards for tiny screens */
+    .product-col {
+        width: 100% !important; /* Force single column layout */
+    }
+    
+    /* Make product cards more compact */
+    .product-card {
+        margin-bottom: 10px;
+    }
+    
+    .product-card .card-img-top {
+        height: 130px !important;
+    }
+    
+    .product-card .card-body {
+        padding: 0.75rem !important;
+    }
+    
+    .product-card .card-title {
+        font-size: 0.9rem !important;
+        height: auto !important;
+        max-height: 40px;
+        overflow: hidden;
+    }
+    
+    /* Smaller font size for all buttons */
+    .btn {
+        font-size: 0.8rem !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+    
+    /* Navbar & Logo adjustments */
+    .navbar-brand {
+        max-width: 70% !important;
+    }
+    
+    .navbar-brand img {
+        max-height: 35px !important;
+    }
+    
+    /* Reduce header margins */
+    h1 {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    h2 {
+        font-size: 1.3rem !important;
+    }
+    
+    h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    /* Make banner more compact */
+    .banner-image {
+        height: 150px !important;
+    }
+    
+    .banner-overlay h1 {
+        font-size: 1.3rem !important;
+    }
+    
+    .banner-overlay h1:after {
+        width: 50px !important;
+        margin-top: 8px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .banner-overlay p {
+        font-size: 0.8rem !important;
+    }
+    
+    /* Adjust utility bar */
+    .utility-bar {
+        font-size: 10px !important;
+    }
+    
+    .utility-btn {
+        font-size: 10px !important;
+        padding: 2px 4px !important;
+    }
+    
+    /* Adjust spacing */
+    .container {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    
+    .py-5 {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+    
+    .my-5 {
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Adjust form inputs */
+    input, select, textarea {
+        font-size: 0.9rem !important;
+    }
+    
+    /* Login & Registration forms */
+    .auth-card .card-body {
+        padding: 1rem !important;
+    }
+    
+    .auth-title {
+        font-size: 1.2rem !important;
+    }
+    
+    /* Fix social login buttons */
+    .social-box {
+        font-size: 0.8rem !important;
+        padding: 8px !important;
+    }
+    
+    .social-login .col-6 {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    
+    /* Footer adjustments */
+    footer {
+        font-size: 0.8rem !important;
+        padding: 10px 5px !important;
+    }
+    
+    footer h5 {
+        font-size: 1rem !important;
+    }
+    
+    /* Adjust form controls for checkout */
+    .form-control {
+        padding: 0.375rem 0.5rem !important;
+    }
+    
+    /* Adjust pagination */
+    .pagination .page-link {
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    /* Adjust product details page */
+    .product-detail-img {
+        height: auto !important;
+        max-height: 200px !important;
+    }
+    
+    /* Make quantity selector smaller */
+    .quantity-selector {
+        width: 80px !important;
+    }
+    
+    /* Fix cart page layout */
+    .cart-item {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    .cart-item-image {
+        margin-bottom: 10px !important;
+    }
+}
+
+/* Specific portrait mode fixes for small phones */
+@media (max-width: 399px) and (orientation: portrait) {
+    /* Further reduce padding to maximize content space */
+    .container {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    
+    /* Remove unnecessary margins */
+    .card {
+        margin-bottom: 10px !important;
+    }
+    
+    /* Fix navbar height */
+    .navbar {
+        min-height: 45px !important;
+    }
+    
+    /* Push main content down to account for smaller navbar */
+    main {
+        padding-top: 70px !important;
+    }
+    
+    /* Optimize search bar */
+    .search-input {
+        height: 32px !important;
+    }
+    
+    /* Make dropdown menus manageable */
+    .dropdown-menu {
+        min-width: 200px !important;
+    }
+    
+    /* Fix search results dropdown */
+    .search-results-dropdown {
+        max-height: 300px !important;
+    }
+    
+    .search-item {
+        padding: 5px 8px !important;
+    }
+    
+    .search-item-image {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        margin-right: 8px !important;
+    }
+}
+
+/* Fix for extremely small devices (Galaxy Fold when folded, etc.) */
+@media (max-width: 280px) {
+    /* Force even smaller text */
+    body {
+        font-size: 12px !important;
+    }
+    
+    /* Further reduce button size */
+    .btn {
+        padding: 0.2rem 0.4rem !important;
+        font-size: 0.75rem !important;
+    }
+    
+    /* Make the navbar brand even smaller */
+    .navbar-brand img {
+        max-height: 30px !important;
+    }
+    
+    /* Stack buttons in product details */
+    .product-buttons .btn {
+        margin-bottom: 5px !important;
+        width: 100% !important;
+    }
+    
+    /* Hide some elements if needed */
+    .navbar-brand span {
+        display: none !important;
+    }
+    
+    /* Fix auth cards */
+    .auth-card {
+        border-radius: 0 !important;
+    }
+    
+    /* Fix social login */
+    .social-login .row {
+        flex-direction: column !important;
+    }
+    
+    .social-login .col-6 {
+        width: 100% !important;
+        margin-bottom: 8px !important;
+    }
+}

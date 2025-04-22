@@ -76,7 +76,7 @@
                                     <span class="text-muted d-block">by <?php echo htmlspecialchars($order['username'] ?? 'Unknown'); ?></span>
                                     <small class="text-muted"><?php echo date('M d, Y H:i', strtotime($order['created_at'])); ?></small>
                                 </div>
-                                <div class="text-right">
+                                <div class="text-end">
                                     <span class="badge 
                                         <?php 
                                         switch($order['status']) {
@@ -90,7 +90,7 @@
                                         ?>">
                                         <?php echo ucfirst($order['status']); ?>
                                     </span>
-                                    <div class="mt-1"><?php echo '$' . number_format($order['total_amount'], 2); ?></div>
+                                    <div class="mt-1 text-end"><?php echo '$' . number_format($order['total_amount'], 2); ?></div>
                                 </div>
                             </a>
                         <?php endwhile; ?>

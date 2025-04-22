@@ -19,6 +19,8 @@ require_once __DIR__ . '/../../includes/SessionManager.php';
     <script src="<?php echo SITE_URL; ?>public/js/search.js"></script>
     <script src="<?php echo SITE_URL; ?>public/js/login.js"></script>
     <script src="<?php echo SITE_URL; ?>public/js/register.js"></script>
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>public/css/alert.css">
+    <script src="<?php echo SITE_URL; ?>public/js/alert.js"></script>
 </head>
 <body>
     <header>

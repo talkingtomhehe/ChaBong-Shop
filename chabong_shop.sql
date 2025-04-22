@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 20, 2025 lúc 04:50 PM
+-- Thời gian đã tạo: Th4 22, 2025 lúc 10:59 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -62,7 +62,8 @@ CREATE TABLE `cart_items` (
 --
 
 INSERT INTO `cart_items` (`id`, `user_id`, `product_id`, `quantity`, `created_at`) VALUES
-(13, 2, 10, 1, '2025-04-06 17:45:06');
+(13, 2, 10, 1, '2025-04-06 17:45:06'),
+(16, 1, 11, 1, '2025-04-22 17:45:40');
 
 -- --------------------------------------------------------
 
@@ -116,7 +117,7 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `email`, `address`, `city`, `post
 (1, 1, 'user1 nguyen', 'user1@gmail.com', '68/2A', 'tphcm', '1111', '32434324', 115.96, 'delivered', '2025-04-05 23:01:04', '2025-04-05 23:24:01'),
 (2, 1, 'user1 nguyen', 'user1@gmail.com', '68/2A', 'tphcm', '1111', '32434324', 9.99, 'delivered', '2025-04-05 23:23:33', '2025-04-06 17:36:26'),
 (3, 2, 'user2', 'user2@gmail.com', '68/2A', 'tphcm', '1111', '32434324', 23.98, 'pending', '2025-04-06 02:03:42', '2025-04-06 02:03:42'),
-(4, 1, 'user1 nguyen', 'user1@gmail.com', '68/2A', 'tphcm', '1112', '32434324', 115.97, 'pending', '2025-04-19 20:57:23', '2025-04-19 20:57:23');
+(4, 1, 'user1 nguyen', 'user1@gmail.com', '68/2A', 'tphcm', '1112', '32434324', 115.97, 'processing', '2025-04-19 20:57:23', '2025-04-22 19:52:15');
 
 -- --------------------------------------------------------
 
@@ -155,7 +156,6 @@ CREATE TABLE `products` (
   `name` varchar(100) NOT NULL,
   `description` text DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
-  `category` varchar(30) NOT NULL,
   `image_url` varchar(255) DEFAULT NULL,
   `stock` int(11) NOT NULL DEFAULT 0,
   `featured` tinyint(1) NOT NULL DEFAULT 0,
@@ -166,19 +166,20 @@ CREATE TABLE `products` (
 -- Đang đổ dữ liệu cho bảng `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `price`, `category`, `image_url`, `stock`, `featured`, `category_id`) VALUES
-(1, 'PEDIGREE Dry Dog Kibble for Large Dogs - Beef and Vegetable Flavor', 'Specially formulated for large dogs, providing complete and balanced nutrition.', 29.99, 'Dogs Food', 'public\\images\\food pedigree.jpg', 5, 0, 1),
-(2, 'Ganador Dog Kibble for Puppies and Adult Dogs', 'Nutritionally balanced food suitable for both puppies and adult dogs.', 39.99, 'Dogs Food', 'public\\images\\ganador.jpg', 5, 0, 1),
-(3, 'KEOS Dog Kibble 1.5kg Bag - Keos+ Digestive Support with Beef and Chicken Flavor', 'High-quality dog kibble designed to support digestive health.', 45.99, 'Dogs Food', 'public\\images\\keos.jpg', 5, 0, 1),
-(4, 'Stainless Steel Anti-Tip Pet Bowl for Dogs and Cats', 'Suitable for feeding and drinking, providing convenience and stability during mealtime.', 19.99, 'Accessories', 'public\\images\\batan.jpg', 5, 0, 5),
-(5, 'Dog Chew Toy in Tennis Ball Shape, Helps Clean Dog\'s Teeth (1 Ball)', 'This chew toy is designed in the shape of a tennis ball, providing a fun and engaging way for dogs to chew while also helping to clean their teeth.\r\nPerfect for promoting dental health by reducing plaque and tartar buildup.\r\nIdeal for dogs that love to chew, ensuring both entertainment and oral hygiene.', 9.99, 'Toys', 'public\\images\\ball.jpg', 4, 0, 3),
-(6, 'Olive Essence Pet Shampoo for Dogs and Cats - 450ml', 'Helps maintain soft, shiny, and healthy fur while providing a gentle cleanse.', 14.99, 'Bath', 'public\\images\\olive.jpg', 5, 0, 4),
-(7, 'Leash and Collar Set for Dogs and Cats (1kg to 5kg) - 1cm Width, Durable Nylon Fabric, Safe and Reli', 'Suitable for pets weighing from 1kg to 5kg.\r\nMade of durable nylon fabric, ensuring strength and reliability.\r\n1cm wide leash and collar, designed for comfort and security.\r\nPerfect for daily walks, providing safety and control for your pets.\r\nProduced in Vietnam, ensuring high quality and craftsmanship.', 24.99, 'Clothes', 'public\\images\\daydatcho.jpg', 5, 0, 2),
-(8, 'Smartheart 400g - Grilled Beef Flavor Adult Dog Food - Thailand', 'Specially formulated for adult dogs with a delicious grilled beef flavor.', 11.99, 'Dogs Food', 'public\\images\\smartheart.jpg', 0, 0, 1),
-(9, 'Orgo Chew Bone for Dogs – Cleans Teeth and Freshens Breath', 'Specially designed to clean dogs\' teeth, helping to reduce plaque and tartar buildup.\r\nFreshens your dog\'s breath, keeping their mouth smelling pleasant.\r\nMade from durable, safe materials, perfect for satisfying your dog\'s chewing needs.', 12.99, 'Dogs Food', 'public\\images\\xuong-gam.jpg', 5, 0, 1),
-(10, 'Rubber Chew Bone for Dogs', 'A durable chew toy made of rubber, designed to satisfy your dog\'s natural chewing instinct.\r\nHelps promote dental health by reducing plaque and tartar buildup.\r\nSafe and non-toxic, perfect for dogs of all sizes.', 19.99, 'Toys', 'public\\images\\xuongdochoi.jpg', 5, 0, 3),
-(11, 'Smartheart Thailand Dog Paté 400g', 'SmartHeart Dog Paté 400g - Beef & Chicken Flavor\r\nDelicious and Easy to Eat Beef & Chicken Flavor\r\nStorage: Keep in the refrigerator and use within 2 days after opening.\r\nNutritional Formula: SmartHeart Paté for dogs is formulated to meet the nutritional standards established by the Association of American Feed Control Officials (AAFCO) and is produced in an ISO 9001 certified facility.\r\nManufactured and Distributed by: Perfect Companion Vietnam Co., Ltd.\r\nFor Pet Use Only.\r\nStorage Instructions: Store the food in a cool, dry place. Avoid moisture. Once opened, keep in the refrigerator at or below 4°C and consume within 3 days.\r\nShelf Life: 3 years from the date of manufacture.', 79.99, 'Dogs Food', 'public\\images\\pate.jpg', 3, 0, 1),
-(12, 'SOS Bath Shampoo for Dogs and Cats 530ml helps smooth the fur and leaves a pleasant fragrance', 'Key Features: \r\n● Professional Fur Care Product: SOS Shampoo is specially designed to nourish and clean the fur of dogs and cats. \r\n● Soft and Smooth Fur: The special formula helps nourish the fur, making it soft and smooth, giving your pets a beautiful and healthy coat. \r\n● Deep Cleaning: SOS Shampoo removes dirt, residue, and unpleasant odors from the fur, keeping your pets clean and smelling fresh. \r\n● Specialized Shampoo for Dogs and Cats: This SOS Shampoo is formulated to keep your pet\'s fur soft and smooth. The deodorizing and antibacterial formula helps retain moisture in your pet\'s skin and leaves a long-lasting fragrance without harming their skin.\r\n\r\nDISTRIBUTOR: SOS Shampoo is exclusively distributed in Vietnam by Ky Nam Trading Development Co., Ltd.', 17.99, 'Bath', 'public\\images\\sos.jpg', 3, 1, 4);
+INSERT INTO `products` (`id`, `name`, `description`, `price`, `image_url`, `stock`, `featured`, `category_id`) VALUES
+(1, 'PEDIGREE Dry Dog Kibble for Large Dogs - Beef and Vegetable Flavor', 'Specially formulated for large dogs, providing complete and balanced nutrition.', 29.99, 'public/images/products/6807fc6c1b4f3.jpg', 5, 0, 1),
+(2, 'Ganador Dog Kibble for Puppies and Adult Dogs', 'Nutritionally balanced food suitable for both puppies and adult dogs.', 39.99, 'public\\images\\ganador.jpg', 5, 0, 1),
+(3, 'KEOS Dog Kibble 1.5kg Bag - Keos+ Digestive Support with Beef and Chicken Flavor', 'High-quality dog kibble designed to support digestive health.', 45.99, 'public\\images\\keos.jpg', 5, 0, 1),
+(4, 'Stainless Steel Anti-Tip Pet Bowl for Dogs and Cats', 'Suitable for feeding and drinking, providing convenience and stability during mealtime.', 19.99, 'public\\images\\batan.jpg', 5, 0, 5),
+(5, 'Dog Chew Toy in Tennis Ball Shape, Helps Clean Dog\'s Teeth (1 Ball)', 'This chew toy is designed in the shape of a tennis ball, providing a fun and engaging way for dogs to chew while also helping to clean their teeth.\r\nPerfect for promoting dental health by reducing plaque and tartar buildup.\r\nIdeal for dogs that love to chew, ensuring both entertainment and oral hygiene.', 9.99, 'public\\images\\ball.jpg', 4, 0, 3),
+(6, 'Olive Essence Pet Shampoo for Dogs and Cats - 450ml', 'Helps maintain soft, shiny, and healthy fur while providing a gentle cleanse.', 14.99, 'public\\images\\olive.jpg', 5, 0, 4),
+(7, 'Leash and Collar Set for Dogs and Cats (1kg to 5kg) - 1cm Width, Durable Nylon Fabric, Safe and Reli', 'Suitable for pets weighing from 1kg to 5kg.\r\nMade of durable nylon fabric, ensuring strength and reliability.\r\n1cm wide leash and collar, designed for comfort and security.\r\nPerfect for daily walks, providing safety and control for your pets.\r\nProduced in Vietnam, ensuring high quality and craftsmanship.', 24.99, 'public\\images\\daydatcho.jpg', 5, 0, 2),
+(8, 'Smartheart 400g - Grilled Beef Flavor Adult Dog Food - Thailand', 'Specially formulated for adult dogs with a delicious grilled beef flavor.', 11.99, 'public\\images\\smartheart.jpg', 0, 0, 1),
+(9, 'Orgo Chew Bone for Dogs – Cleans Teeth and Freshens Breath', 'Specially designed to clean dogs\' teeth, helping to reduce plaque and tartar buildup.\r\nFreshens your dog\'s breath, keeping their mouth smelling pleasant.\r\nMade from durable, safe materials, perfect for satisfying your dog\'s chewing needs.', 12.99, 'public\\images\\xuong-gam.jpg', 5, 0, 1),
+(10, 'Rubber Chew Bone for Dogs', 'A durable chew toy made of rubber, designed to satisfy your dog\'s natural chewing instinct.\r\nHelps promote dental health by reducing plaque and tartar buildup.\r\nSafe and non-toxic, perfect for dogs of all sizes.', 19.99, 'public\\images\\xuongdochoi.jpg', 5, 0, 3),
+(11, 'Smartheart Thailand Dog Paté 400g', 'SmartHeart Dog Paté 400g - Beef & Chicken Flavor\r\nDelicious and Easy to Eat Beef & Chicken Flavor\r\nStorage: Keep in the refrigerator and use within 2 days after opening.\r\nNutritional Formula: SmartHeart Paté for dogs is formulated to meet the nutritional standards established by the Association of American Feed Control Officials (AAFCO) and is produced in an ISO 9001 certified facility.\r\nManufactured and Distributed by: Perfect Companion Vietnam Co., Ltd.\r\nFor Pet Use Only.\r\nStorage Instructions: Store the food in a cool, dry place. Avoid moisture. Once opened, keep in the refrigerator at or below 4°C and consume within 3 days.\r\nShelf Life: 3 years from the date of manufacture.', 79.99, 'public\\images\\pate.jpg', 3, 0, 1),
+(12, 'SOS Bath Shampoo for Dogs and Cats 530ml helps smooth the fur and leaves a pleasant fragrance', 'Key Features: \r\n● Professional Fur Care Product: SOS Shampoo is specially designed to nourish and clean the fur of dogs and cats. \r\n● Soft and Smooth Fur: The special formula helps nourish the fur, making it soft and smooth, giving your pets a beautiful and healthy coat. \r\n● Deep Cleaning: SOS Shampoo removes dirt, residue, and unpleasant odors from the fur, keeping your pets clean and smelling fresh. \r\n● Specialized Shampoo for Dogs and Cats: This SOS Shampoo is formulated to keep your pet\'s fur soft and smooth. The deodorizing and antibacterial formula helps retain moisture in your pet\'s skin and leaves a long-lasting fragrance without harming their skin.\r\n\r\nDISTRIBUTOR: SOS Shampoo is exclusively distributed in Vietnam by Ky Nam Trading Development Co., Ltd.', 17.99, 'public\\images\\sos.jpg', 3, 1, 4),
+(18, 'Thức Ăn Hạt Cho Chó Con Poodle Royal Canin Poodle Puppy', 'Thương hiệu: Royal Canin\r\nPhù hợp cho: Chó con Poodle (2 - 10 tháng tuổi)\r\nRoyal Canin Poodle Puppy là loại thức ăn cho chó dinh dưỡng được thiết kế dành riêng cho chó con Poodle của bạn. Thức ăn Poodle này tùy chỉnh được thiết kế cho mõm và hàm thẳng của Poodle, giúp chúng dễ dàng nhặt và nhai. Hạt Royal Canin chứa một hỗn hợp các chất chống oxy hóa độc quyền và vitamin E hỗ trợ hệ thống miễn dịch đang phát triển của Poodle puppy và giữ cho cơ thể chó phát triển khỏe mạnh. Royal Canin Poodle còn hỗ trợ sức khỏe của da và lông cũng như chăm sóc hệ tiêu hóa trong giai đoạn chó con của Poodle. Khi Poodle của bạn hơn 10 tháng tuổi, hãy chuyển sang các loại hạt cho Poodle khác của Royal Canin để có đầy đủ dinh dưỡng cho những năm trường thành tiếp theo.\r\nLợi ích:\r\n\r\nGIÚP CHÓ PHÁT TRIỂN KHỎE MẠNH: Một phức hợp chất chống oxy hóa độc quyền, bao gồm vitamin E, giúp hỗ trợ sự phát triển của hệ thống miễn dịch ở chó con.\r\nTỐT CHO DA VÀ LÔNG:  EPA và DHA từ dầu cá giúp thúc đẩy làn da và bộ lông khỏe mạnh giúp nuôi dưỡng bộ lông xoăn đang phát triển của chó con\r\nHỖ TRỢ TIÊU HÓA: Hỗ trợ tiêu hóa khỏe mạnh ở chó con và thúc đẩy chất lượng phân tối ưu với protein và prebiotic chất lượng cao.\r\nHÌNH DÁNG KIBBLE CHUYÊN DỤNG: Thiết kế kibble độc đáo giúp Poodle dễ dàng nhặt và nhai thức ăn. \r\nThành phần dinh dưỡng\r\n\r\nThành phần: Bột phụ phẩm từ thịt gà, gạo nấu bia, gluten lúa mì, mỡ gà, ngô, bột gluten ngô, lúa mì, hương vị tự nhiên, bột củ cải khô, dầu cá, monocalcium phosphate, dầu thực vật, natri silico aluminat, canxi sulfat, kali clorua, vỏ hạt mã đề, canxi cacbonat, muối, fructooligosacarit, natri tripolyphotphat, vitamin [DL-alpha tocopherol axetat (nguồn vitamin E), chất bổ sung niacin, L-ascorbyl-2-polyphotphat (nguồn vitamin C), D-canxi pantothenate, biotin, pyridoxine hydrochloride (vitamin B6), bổ sung riboflavin, thiamine mononitrate (vitamin B1), vitamin A axetat, axit folic, bổ sung vitamin B12, bổ sung vitamin D3], men thủy phân (nguồn betaglucans), DL-methionine, L-lysine , choline clorua, taurine, cystine, khoáng chất vi lượng [kẽm proteinate, kẽm oxit, mangan proteinate, sắt sulfat, mangan oxit, đồng sulfat, canxi iodate, natri selenit, đồng proteinate], chiết xuất cúc vạn thọ (Tagetes erecta L.), yucca schidigera chiết xuất, L-carnitine, carotene, chiết xuất hương thảo, được bảo quản bằng hỗn hợp tocopherols và axit xitric.', 20.00, 'public/images/products/6807fd20b8f15.png', 5, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -230,10 +231,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `created_at`, `full_name`, `phone`, `address`, `city`, `postal_code`, `updated_at`, `state`, `last_activity`, `last_login`, `avatar`, `google_id`, `remember_token`, `token_expires`) VALUES
-(1, 'user1', 'user1@gmail.com', '$2y$10$2MzpotsMrUbSAx5TYkMfQufy7IRwBubWIlI4g/ZCfrbnNqzyvVcAC', '2025-04-04 21:49:36', 'user1 nguyen', '32434324', '68/2A', 'tphcm', '1112', '2025-04-20 12:18:49', NULL, '2025-04-20 12:18:49', '2025-04-20 12:10:45', 'public/images/avatars/avatar_1_67f1c09bb795b.jpg', NULL, NULL, NULL),
+(1, 'user1', 'user1@gmail.com', '$2y$10$2MzpotsMrUbSAx5TYkMfQufy7IRwBubWIlI4g/ZCfrbnNqzyvVcAC', '2025-04-04 21:49:36', 'user1 nguyen', '32434324', '68/2A', 'tphcm', '1112', '2025-04-22 19:22:40', NULL, '2025-04-22 19:22:40', '2025-04-22 17:44:10', 'public/images/avatars/avatar_1_67f1c09bb795b.jpg', NULL, NULL, NULL),
 (2, 'user2', 'user2@gmail.com', '$2y$10$6J4TvmWFCA2o08k4QamEy.5U7BaB5XAe4goou2BVaq2TEKZmyiSgS', '2025-04-05 17:00:17', NULL, NULL, NULL, NULL, NULL, '2025-04-06 22:59:19', NULL, '2025-04-06 22:59:19', NULL, 'public/images/avatars/avatar_2_67f1e05ab1d89.jpg', NULL, NULL, NULL),
-(3, 'phankhanhnhan01', 'phankhanhnhan01@gmail.com', '$2y$10$V2WKQTjIfSplFNKbheTSuuDTXYlMtncDEDQWhZzYI4w/eLeI770wS', '2025-04-06 01:32:38', 'Nhân Phan', NULL, NULL, NULL, NULL, '2025-04-06 20:41:17', NULL, '2025-04-06 20:41:17', '2025-04-06 20:37:19', 'https://lh3.googleusercontent.com/a/ACg8ocIbDIbyks-c0qGWVK-Vq44Xfus5vtRh0ro4k6aVLnHAORBIdg=s96-c', '103729317953199544120', NULL, NULL),
-(4, 'user3', 'user3@gmail.com', '$2y$10$dZO.9iCiF1xezZlgjsEYBeVfHGNtS4NZhws4hGYz3/dNMa7Ll1sP.', '2025-04-20 11:55:26', NULL, NULL, NULL, NULL, NULL, '2025-04-20 11:55:46', NULL, '2025-04-20 11:55:46', '2025-04-20 11:55:43', NULL, NULL, NULL, NULL);
+(3, 'phankhanhnhan01', 'phankhanhnhan01@gmail.com', '$2y$10$V2WKQTjIfSplFNKbheTSuuDTXYlMtncDEDQWhZzYI4w/eLeI770wS', '2025-04-06 01:32:38', 'Nhân Phan', NULL, NULL, NULL, NULL, '2025-04-22 20:58:35', NULL, '2025-04-22 20:58:35', '2025-04-22 20:35:15', 'https://lh3.googleusercontent.com/a/ACg8ocIbDIbyks-c0qGWVK-Vq44Xfus5vtRh0ro4k6aVLnHAORBIdg=s96-c', '103729317953199544120', NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -310,13 +310,13 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT cho bảng `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(30) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(30) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `orders`
@@ -334,7 +334,7 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `store_locations`

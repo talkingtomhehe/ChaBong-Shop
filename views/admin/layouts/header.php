@@ -153,6 +153,8 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="<?php echo SITE_URL; ?>public/css/alert.css">
+    <script src="<?php echo SITE_URL; ?>public/js/alert.js"></script>
 </head>
 <body>
 <?php if (isset($_SESSION['admin_id'])): ?>
@@ -237,7 +239,7 @@
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle me-2"></i>
-                            <strong><?php echo $_SESSION['admin_username']; ?></strong>
+                            <strong><?php echo isset($_SESSION['admin_username']) ? htmlspecialchars($_SESSION['admin_username']) : 'Admin'; ?></strong>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
                             <li><a class="dropdown-item" href="<?php echo SITE_URL; ?>admin/profile">Profile</a></li>

@@ -6,7 +6,11 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>">Home</a></li>
-                <li class="breadcrumb-item"><a href="<?php echo SITE_URL; ?>products/category/<?php echo $product['category_id']; ?>"><?php echo htmlspecialchars($product['category']); ?></a></li>
+                <li class="breadcrumb-item">
+                    <a href="<?php echo SITE_URL; ?>products/category/<?php echo $product['category_id']; ?>">
+                        <?php echo htmlspecialchars($product['category_name'] ?? 'Category'); ?>
+                    </a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($product['name']); ?></li>
             </ol>
         </nav>
@@ -25,7 +29,7 @@
             <!-- Product Details -->
             <div class="col-md-6 product-details">
                 <h1 class="mb-3"><?php echo htmlspecialchars($product['name']); ?></h1>
-                <p class="badge bg-secondary mb-3"><?php echo htmlspecialchars($product['category']); ?></p>
+                <p class="badge bg-secondary mb-3"><?php echo htmlspecialchars($product['category_name'] ?? ''); ?></p>
                 <h3 class="text-primary mb-4">$<?php echo number_format($product['price'], 2); ?></h3>
                 
                 <div class="row mb-4">
@@ -81,6 +85,14 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo htmlspecialchars($relatedProduct['name']); ?></h5>
                                         <p class="card-text">$<?php echo number_format($relatedProduct['price'], 2); ?></p>
+                                        <?php 
+                                        if (isset($relatedProduct['category_id'])) {
+                                            $relatedCategory = $this->categoryModel->getCategoryById($relatedProduct['category_id']);
+                                            if ($relatedCategory) {
+                                                echo '<small class="text-muted">' . htmlspecialchars($relatedCategory['name']) . '</small>';
+                                            }
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </a>

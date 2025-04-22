@@ -1,5 +1,13 @@
 <div class="card border-0 shadow-sm">
     <div class="card-body">
+        <?php if (isset($_SESSION['admin_message'])): ?>
+            <div class="alert alert-<?php echo $_SESSION['admin_message']['type']; ?> alert-dismissible fade show" role="alert">
+                <?php echo $_SESSION['admin_message']['text']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php unset($_SESSION['admin_message']); ?>
+        <?php endif; ?>
+        
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="card-title mb-0">All Products</h5>
             <a href="<?php echo SITE_URL; ?>admin/add-product" class="btn btn-primary">

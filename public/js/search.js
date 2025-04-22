@@ -89,9 +89,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
         
         // Render search results in dropdown
-        function renderSearchResults(results, query) {
+        function renderSearchResults(data, query) {
             // Clear previous results
             searchHints.innerHTML = '';
+            
+            // Get results array from response object
+            const results = data.results || [];
+            const totalCount = data.totalCount || 0;
             
             if (results.length === 0) {
                 // No results found
@@ -103,8 +107,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Create header
-            let html = `<div class="search-hint-header">Search results for "${query}"</div>`;
+            // Create header - show total count if there are more results than shown
+            let headerText = `Search results for "${query}"`;
+            if (totalCount > results.length) {
+                headerText += ` (showing ${results.length} of ${totalCount})`;
+            }
+            
+            let html = `<div class="search-hint-header">${headerText}</div>`;
             
             // Create results
             results.forEach(product => {
@@ -198,8 +207,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Show loading indicator
                         searchResultsContainer.innerHTML = '<div class="text-center my-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
                         
-                        // Fetch search results
-                        fetch(`${SITE_URL}products/ajax-search?query=${encodeURIComponent(query)}`)
+                        // Fetch search results - add all=true parameter
+                        fetch(`${SITE_URL}products/ajax-search?query=${encodeURIComponent(query)}&all=true`)
                             .then(response => response.json())
                             .then(data => {
                                 updateMainSearchResults(query, data);
@@ -226,13 +235,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Function to update the main search results
-    function updateMainSearchResults(query, products) {
+    function updateMainSearchResults(query, data) {
         const searchResultsContainer = document.getElementById('dynamic-search-results');
         if (!searchResultsContainer) return;
         
         // Update page title
         document.querySelector('h1').textContent = `Search Results for "${query}"`;
         document.title = `Search: ${query} - Pet Shop`;
+        
+        // Extract results array from response object
+        const products = data.results || [];
+        const totalCount = data.totalCount || 0;
         
         if (products.length === 0) {
             searchResultsContainer.innerHTML = `

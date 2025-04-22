@@ -222,7 +222,8 @@ class AdminController
                 'price' => isset($_POST['price']) ? (float)$_POST['price'] : 0,
                 'category_id' => isset($_POST['category_id']) ? (int)$_POST['category_id'] : 0,
                 'stock' => isset($_POST['stock']) ? (int)$_POST['stock'] : 0,
-                'featured' => isset($_POST['featured']) ? 1 : 0
+                'featured' => isset($_POST['featured']) ? 1 : 0,
+                'image' => ''
             ];
 
             // Validate form data
@@ -269,17 +270,13 @@ class AdminController
                     $result = $this->productModel->addProduct($product);
 
                     if ($result) {
-                        $success = 'Product added successfully';
-                        // Reset form
-                        $product = [
-                            'name' => '',
-                            'description' => '',
-                            'price' => '',
-                            'category_id' => '',
-                            'image' => '',
-                            'stock' => '',
-                            'featured' => 0
+                        $_SESSION['admin_message'] = [
+                            'type' => 'success',
+                            'text' => 'Product added successfully'
                         ];
+                        
+                        header('Location: ' . SITE_URL . 'admin/products');
+                        exit;
                     } else {
                         $error = 'Failed to add product';
                     }
@@ -376,7 +373,13 @@ class AdminController
                     $result = $this->productModel->updateProduct($product);
 
                     if ($result) {
-                        $success = 'Product updated successfully';
+                        $_SESSION['admin_message'] = [
+                            'type' => 'success',
+                            'text' => 'Product updated successfully'
+                        ];
+                        
+                        header('Location: ' . SITE_URL . 'admin/products');
+                        exit;
                     } else {
                         $error = 'Failed to update product';
                     }
@@ -492,12 +495,13 @@ class AdminController
                 $result = $this->categoryModel->addCategory($category);
 
                 if ($result) {
-                    $success = 'Category added successfully';
-                    // Reset form
-                    $category = [
-                        'name' => '',
-                        'description' => ''
+                    $_SESSION['admin_message'] = [
+                        'type' => 'success',
+                        'text' => 'Category added successfully'
                     ];
+                    
+                    header('Location: ' . SITE_URL . 'admin/categories');
+                    exit;
                 } else {
                     $error = 'Failed to add category';
                 }
@@ -547,7 +551,13 @@ class AdminController
                 $result = $this->categoryModel->updateCategory($category);
 
                 if ($result) {
-                    $success = 'Category updated successfully';
+                    $_SESSION['admin_message'] = [
+                        'type' => 'success',
+                        'text' => 'Category updated successfully'
+                    ];
+                    
+                    header('Location: ' . SITE_URL . 'admin/categories');
+                    exit;
                 } else {
                     $error = 'Failed to update category';
                 }

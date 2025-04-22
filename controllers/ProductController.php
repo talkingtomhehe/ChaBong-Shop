@@ -192,33 +192,41 @@ class ProductController {
     public function ajaxSearch() {
         // Get search query
         $query = isset($_GET['query']) ? $_GET['query'] : '';
+        $allResults = isset($_GET['all']) && $_GET['all'] === 'true';
         
         // Perform search
         $results = [];
+        $totalCount = 0;
         if (!empty($query)) {
-            // Limit to 5 results in dropdown
-            $maxResults = 5;
+            // Get total count first (without limits)
+            $allSearchResults = $this->productModel->searchProducts($query);
+            $totalCount = $allSearchResults->num_rows;
+            
+            $maxResults = $allResults ? null : 5;
             $searchResults = $this->productModel->searchProducts($query, 'name', 'asc', $maxResults);
             
             if ($searchResults && $searchResults->num_rows > 0) {
                 while ($product = $searchResults->fetch_assoc()) {
-                    // Use image_url directly from the database, since that's the field name in your table
-                    $image = $product['image_url']; // Changed from 'image' to 'image_url'
+                    $image = $product['image_url'];
                     
                     // Add to results array
                     $results[] = [
                         'id' => $product['id'],
                         'name' => $product['name'],
                         'price' => $product['price'],
-                        'image' => $image
+                        'image' => $image,
+                        'category_name' => isset($product['category_name']) ? $product['category_name'] : null
                     ];
                 }
             }
         }
         
-        // Return JSON response
+        // Return JSON response with total count
         header('Content-Type: application/json');
-        echo json_encode($results);
+        echo json_encode([
+            'results' => $results,
+            'totalCount' => $totalCount
+        ]);
         exit;
     }
 }
