@@ -3,7 +3,7 @@
         <h1 class="mb-4">Checkout</h1>
         
         <?php if (!empty($success)): ?>
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-permanent">
                 <?php echo $success; ?>
                 <div class="mt-3">
                     <a href="<?php echo SITE_URL; ?>" class="btn btn-primary">Return to Home</a>

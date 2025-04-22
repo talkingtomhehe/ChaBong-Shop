@@ -34,9 +34,10 @@ class Cart {
     public function getCartItems($userId) {
         $userId = (int)$userId;
         
-        $sql = "SELECT ci.*, p.name, p.price, p.image_url, p.stock, p.category, (p.price * ci.quantity) as subtotal 
+        $sql = "SELECT ci.*, p.name, p.price, p.image_url, p.stock, p.category_id, c.name as category_name, (p.price * ci.quantity) as subtotal 
                 FROM {$this->table} ci 
                 JOIN products p ON ci.product_id = p.id 
+                LEFT JOIN categories c ON p.category_id = c.id
                 WHERE ci.user_id = {$userId}";
                 
         return $this->db->query($sql);
