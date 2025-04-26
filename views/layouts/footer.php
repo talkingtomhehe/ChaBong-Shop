@@ -6,17 +6,16 @@
     <button onclick="topFunction()" id="myBtn" title="Go to top">
         <i class="bi bi-arrow-up"></i>
     </button>
-    
-    <!-- Add custom styles for footer links -->
+
     <style>
         .footer-link {
             transition: color 0.3s ease;
         }
         .footer-link:hover {
-            color: #b77c52 !important; /* Brown color on hover */
+            color: #b77c52 !important;
         }
         .social-link:hover {
-            color: #b77c52 !important; /* Brown color on hover for social icons */
+            color: #b77c52 !important;
         }
     </style>
     
@@ -27,7 +26,7 @@
                 <div class="col-lg-4 col-md-6 mb-4 mb-md-0 text-start">
                     <h5 class="text-uppercase mb-4">Contact Us</h5>
                     <div class="mb-3">
-                        <p class="mb-0"><i class="bi bi-geo-alt-fill me-2"></i> 123 Pet Street, Bangkok 10500, Thailand</p>
+                        <p class="mb-0"><i class="bi bi-geo-alt-fill me-2"></i> 269 Đ. Lý Thường Kiệt, Phường 15, Quận 11, Hồ Chí Minh, Việt Nam</p>
                     </div>
                     <div class="mb-3">
                         <p class="mb-0"><i class="bi bi-telephone-fill me-2"></i> +66 2 123 4567</p>

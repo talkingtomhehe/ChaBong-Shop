@@ -172,10 +172,9 @@ class Product {
     public function searchProducts($search, $sort = 'id', $order = 'desc', $limit = null, $offset = null) {
         $search = $this->db->real_escape_string($search);
         
-        // Modified query to join with categories table and search by name or category name only (not description)
         $sql = "SELECT p.* FROM {$this->table} p
                 LEFT JOIN categories c ON p.category_id = c.id
-                WHERE p.name LIKE '%{$search}%' 
+                WHERE p.name LIKE '{$search}%' 
                 OR c.name LIKE '%{$search}%'
                 ORDER BY p.{$sort} {$order}";
         
