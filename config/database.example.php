@@ -1,18 +1,14 @@
 <?php
+// Database configuration - EXAMPLE FILE
+// Copy this file to database.php and fill with your actual values
 class Database {
-    private $host;
-    private $username;
-    private $password;
-    private $dbname;
+    private $host = 'localhost';
+    private $username = 'your_username';
+    private $password = 'your_password';
+    private $dbname = 'chabong_shop';
     private $conn;
 
     public function __construct() {
-        // Get credentials from environment variables
-        $this->host = getenv('DB_HOST') ?: 'localhost';
-        $this->username = getenv('DB_USER') ?: 'root';
-        $this->password = getenv('DB_PASS') ?: '';
-        $this->dbname = getenv('DB_NAME') ?: 'chabong_shop';
-        
         try {
             $this->conn = new mysqli($this->host, $this->username, $this->password, $this->dbname);
             
@@ -22,8 +18,8 @@ class Database {
             
             $this->conn->set_charset("utf8mb4");
         } catch (Exception $e) {
-            error_log('Database Connection Error: ' . $e->getMessage());
-            die('Database connection failed. Check error logs for details.');
+            echo 'Database Connection Error: ' . $e->getMessage();
+            exit;
         }
     }
 

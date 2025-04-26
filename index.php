@@ -6,6 +6,8 @@ require_once 'includes/SessionManager.php';
 // Initialize session
 SessionManager::init();
 
+require_once 'config/env.php';
+
 // Include configuration files
 require_once 'config/config.php';
 require_once 'config/database.php';

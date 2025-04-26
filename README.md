@@ -144,3 +144,19 @@ This project uses Composer to manage PHP dependencies. If you encounter errors r
    ```
 
 The vendor directory contains essential libraries and should be properly initialized before running the application.
+
+## Environment Configuration
+
+This project uses environment variables for configuration. To set up:
+
+1. Copy `.env.example` to `.env` and fill in your credentials
+2. Copy `config/database.example.php` to `config/database.php` (if not using environment variables)
+3. Copy `config/google_config.example.php` to `config/google_config.php` (if not using environment variables)
+
+### Google OAuth Setup
+
+1. Create a project in Google Developer Console
+2. Set up OAuth credentials for Web Application
+3. Add authorized redirect URI: `http://localhost/petshop/user/google-callback` 
+   (adjust based on your actual domain)
+4. Add credentials to your `.env` file
